@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- 配置数据库的内容 -->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> 
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property> <property 
+		name="jdbcUrl" value="jdbc:mysql://localhost:3306/test"></property> <property 
+		name="user" value="root"></property> <property name="password" value="123456"></property> 
+		<property name="driverClassName"> <value>com.mysql.jdbc.Driver</value> </property> 
+		<property name="url"> <value>jdbc:mysql://127.0.0.1:3306/test</value> </property> 
+		<property name="username"> <value>root</value> </property> <property name="password"> 
+		<value>123456</value> </property> </bean> -->
+
+	<!-- 配置数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="123456"></property>
+	</bean>
+
+
+	<!-- 配置sessionFactory工厂类 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 配置hibernate信息 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.current_session_context_class">
+					org.springframework.orm.hibernate5.SpringSessionContext
+				</prop>
+			</props>
+		</property>
+		<!-- 配置hiberante.mapping映射资源 -->
+		<property name="mappingResources">
+			<list>
+				<value>entity/department.hbm.xml</value>
+				<value>entity/employee.hbm.xml</value>
+				<value>entity/recruit.hbm.xml</value>
+				<value>entity/salary.hbm.xml</value>
+				<value>entity/user.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 配置hibernateTemplate -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- 配置通知 通知事务管理要管理的事务方法 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="find*" propagation="SUPPORTS" read-only="false" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 配置切入点 执行*.impl下的所有类中 的所有方法 -->
+	<!-- <aop:aspect ref="通知的对象"==advice-ref> <aop:before method="before1" pointcut-ref="pt1"/> 
+		</aop:aspect> -->
+	<aop:config>
+		<aop:pointcut expression="execution(* *.impl.*.*(..))"
+			id="pt1" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pt1" />
+	</aop:config>
+	<!-- dao的bean类型 -->
+	<bean id="userDaoImpl" class="dao.impl.UserDAOImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- services的实体类bean -->
+	<bean id="userServiceImpl" class="service.impl.UserServiceImpl">
+		<property name="userDao" ref="userDaoImpl"></property>
+	</bean>
+	<!-- action的实体类bean -->
+	<bean id="userAction" class="action.UserAction">
+		<property name="userService" ref="userServiceImpl" />
+	</bean>
+
+</beans>

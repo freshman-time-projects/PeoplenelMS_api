@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+    <class name="entity.Salary" table="salary">
+    <id name="s_id" column="s_id" type="java.lang.Integer">
+    <generator class="native"></generator>
+    </id>
+    <property name="name" column="name" type="java.lang.String"></property>
+    <property name="salary" column="salary" type="java.lang.String"></property>
+    <property name="bonus" column="bonus" type="java.lang.Double"></property>
+    <one-to-one name="employee" class="entity.Employee"></one-to-one>
+    </class>
+    </hibernate-mapping>

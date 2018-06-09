@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+    <class name="entity.Recruit" table="recruit">
+    <id name="r_id" column="r_id" type="java.lang.Integer">
+    <generator class="native"></generator>
+    </id>
+    <property name="name" column="name" type="java.lang.String"></property>
+    <property name="school" column="school" type="java.lang.String"></property>
+    <property name="sex" column="sex" type="java.lang.String"></property>
+    <property name="filepath" column="filepath" type="java.lang.String"></property>
+    <property name="state" column="state" type="java.lang.Integer"></property>
+    </class>
+    </hibernate-mapping>

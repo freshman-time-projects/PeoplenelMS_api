@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+    <class name="entity.Employee" table="employee">
+    <id name="e_id" column="e_id" type="java.lang.Integer">
+    <generator class="native"></generator>
+    </id>
+    <property name="name" column="name" type="java.lang.String"></property>
+    <property name="age" column="age" type="java.lang.Integer"></property>
+    <property name="sex" column="sex" type="java.lang.String"></property>
+    <property name="marry" column="marry" type="java.lang.String"></property>
+    <property name="idCard" column="idCard" type="java.lang.String"></property>
+    <property name="edu" column="edu" type="java.lang.String"></property>
+    <property name="school" column="school" type="java.lang.String"></property>
+    <property name="mobile" column="mobile" type="java.lang.Integer"></property>
+    <property name="address" column="address" type="java.lang.String"></property>
+    <property name="eamil" column="eamil" type="java.lang.String"></property>
+    <many-to-one name="department" class="entity.Department" column="d_id" cascade="save-update,delete"></many-to-one>
+    <one-to-one name="salary" class="entity.Salary"></one-to-one>
+    </class>
+    </hibernate-mapping>
