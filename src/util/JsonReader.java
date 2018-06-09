@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONObject;
 public class JsonReader {
 	    public static JSONObject receivePost(HttpServletRequest request) throws IOException, UnsupportedEncodingException {  
-	  
 	        // 读取请求内容  
 	        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"utf-8"));  
 	        String line = null;  

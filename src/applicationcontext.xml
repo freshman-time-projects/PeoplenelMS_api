@@ -56,7 +56,7 @@
 		</property>
 	</bean>
 	<!-- 配置hibernateTemplate -->
-	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<!-- 配置事务管理器 -->
@@ -84,14 +84,24 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	<bean id="employeeDaoImpl" class="dao.impl.EmployeeDAOImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 	
 	<!-- services的实体类bean -->
 	<bean id="userServiceImpl" class="service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDaoImpl"></property>
 	</bean>
+	<bean id="employeeServiceImpl" class="service.impl.EmployeeServiceImpl">
+		<property name="employeeDAO" ref="employeeDaoImpl"></property>
+	</bean>
 	<!-- action的实体类bean -->
 	<bean id="userAction" class="action.UserAction">
 		<property name="userService" ref="userServiceImpl" />
+	</bean>
+	<bean id="employeeAction" class="action.EmployeeAction">
+		<property name="employeeService" ref="employeeServiceImpl" />
 	</bean>
 
 </beans>

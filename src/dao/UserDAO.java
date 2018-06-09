@@ -5,9 +5,9 @@ import java.util.List;
 import entity.User;
 
 public interface UserDAO {
-	public void saveUser();
-	public Integer deleteUser();
-	public Integer UpdateUser();
+	public void saveUser(User user);
+	public Integer deleteUser(User user);
+	public Integer UpdateUser(User user);
 	public List<User> getAllUser();
 	public List<User> getPartUser();
 	public User getUser();

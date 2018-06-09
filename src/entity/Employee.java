@@ -1,20 +1,32 @@
 package entity;
 
+import com.google.gson.annotations.Expose;
+
 public class Employee {
+	 @Expose
 	private Integer e_id;
+	 @Expose
 	private String name;
+	 @Expose
 	private Integer age;
+	 @Expose
 	private String sex;
+	 @Expose
 	private String marry;
+	 @Expose
 	private String idCard;
+	 @Expose
 	private String edu;
+	 @Expose
 	private String school;
+	 @Expose
 	private Integer mobile;
+	 @Expose
 	private String address;
+	 @Expose
 	private String eamil;
 	private Department department;// 一对多的部门
 	private Salary salary;//一对一的薪水
-
 	public Salary getSalary() {
 		return salary;
 	}

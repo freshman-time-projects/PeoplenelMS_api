@@ -5,6 +5,20 @@ public class User {
 	private String username;
 	private String pasword;
 	private String e_mail;
+	private String role;
+	private String code;
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
 	public Integer getU_id() {
 		return u_id;
 	}

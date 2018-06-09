@@ -2,31 +2,42 @@ package service.impl;
 
 import java.util.List;
 
-import entity.Employee;
 import service.EmployeeService;
+import dao.EmployeeDAO;
+import dao.UserDAO;
+import entity.Employee;
 
 public class EmployeeServiceImpl implements EmployeeService {
+	private EmployeeDAO employeeDAO;
+	
+	public EmployeeDAO getEmployeeDAO() {
+		return employeeDAO;
+	}
+	public void setEmployeeDAO(EmployeeDAO employeeDAO) {
+		this.employeeDAO = employeeDAO;
+	}
 	@Override
-	public Integer saveEmployee() {
+	public Integer saveEmployee(Employee employee) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Integer deleteEmployee() {
+	public Integer deleteEmployee(Employee employee) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer updateEmployee() {
+	public Integer updateEmployee(Employee employee) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Employee> getAllEmployee() {
-		// TODO Auto-generated method stub
-		return null;
+
+		
+		return  employeeDAO.getAllEmployee();
 	}
 
 	@Override

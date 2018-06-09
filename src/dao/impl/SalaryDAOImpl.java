@@ -4,17 +4,17 @@ import java.util.List;
 import dao.SalaryDAO;
 import entity.Salary;
 public class SalaryDAOImpl implements SalaryDAO{
-	public void saveSalary() {
+	public void saveSalary(Salary salary) {
 		
 	}
 
-	public Integer deleteSalary() {
+	public Integer deleteSalary(Salary salary) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer UpdateSalary() {
+	public Integer UpdateSalary(Salary salary) {
 		// TODO Auto-generated method stub
 		return null;
 	}

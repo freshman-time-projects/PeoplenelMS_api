@@ -7,19 +7,19 @@ import entity.Department;
 
 public class DepartmentDAOImpl implements DepartmentDAO {
 	@Override
-	public void saveDepartment() {
+	public void saveDepartment(Department department) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteDepartment() {
+	public Integer deleteDepartment(Department department) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer UpdateDepartment() {
+	public Integer UpdateDepartment(Department department) {
 		// TODO Auto-generated method stub
 		return null;
 	}

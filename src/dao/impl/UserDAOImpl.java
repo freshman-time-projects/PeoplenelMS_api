@@ -3,13 +3,11 @@ package dao.impl;
 import java.util.List;
 
 import javax.transaction.TransactionManager;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.junit.Test;
-import org.springframework.orm.hibernate4.HibernateTemplate;
-
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import dao.UserDAO;
 import entity.User;
 
@@ -30,18 +28,7 @@ public class UserDAOImpl implements UserDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	@Test
-	public void saveUser() {
-		System.out.println(sessionFactory);
-	/*Session session = sessionFactory.openSession();
-	System.out.println("dddddd2");
-	Transaction transaction = session.beginTransaction();
-	System.out.println("dddddd3");
-		
-		session.save(user);
-		transaction.commit();
-		
-		session.close();*/
-		User user = new User();
+	public void saveUser(User user) {
 		user.setE_mail("111111");
 		user.setPasword("11111");
 		user.setU_id(1);
@@ -49,19 +36,24 @@ public class UserDAOImpl implements UserDAO {
 		hibernateTemplate.save(user);
 	}
 
-	public Integer deleteUser() {
+	public Integer deleteUser(User user) {
 		return null;
 	}
 
-	public Integer UpdateUser() {
+	public Integer UpdateUser(User user) {
 		return null;
 	}
 
 	@Override
 	public List<User> getAllUser() {
-		return null;
+		String sql = "from User";
+		return (List<User>) hibernateTemplate.find(sql);
 	}
 
+	private void find(String sql) {
+		// TODO Auto-generated method stub
+		
+	}
 	@Override
 	public User getUser() {
 		return null;

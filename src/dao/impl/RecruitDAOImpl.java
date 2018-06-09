@@ -8,19 +8,19 @@ import entity.Recruit;
 public class RecruitDAOImpl implements RecruitDAO {
 
 	@Override
-	public void saveRecruit() {
+	public void saveRecruit(Recruit recruit) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Integer deleteRecruit() {
+	public Integer deleteRecruit(Recruit recruit) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer UpdateRecruit() {
+	public Integer UpdateRecruit(Recruit recruit) {
 		// TODO Auto-generated method stub
 		return null;
 	}

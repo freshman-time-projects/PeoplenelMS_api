@@ -5,19 +5,19 @@ import java.util.List;
 import entity.Department;
 import service.DepartmentService;
 public class DepartmentServiceImpl implements DepartmentService {
-	public Integer saveDepartment() {
+	public Integer saveDepartment(Department department) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer deleteDepartment() {
+	public Integer deleteDepartment(Department department) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer updateDepartment() {
+	public Integer updateDepartment(Department department) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -39,5 +39,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

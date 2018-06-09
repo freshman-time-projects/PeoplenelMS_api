@@ -39,8 +39,11 @@ public class JsonUtil extends ActionSupport{
 		response.setCharacterEncoding("utf-8");
 		//允许跨域
 		response.setHeader("Access-Control-Allow-Origin", "*"); 
-		return response.getWriter() ;
+		return response.getWriter();
 		
 	}
+	
+	
+	
 	
 }

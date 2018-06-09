@@ -3,11 +3,21 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 	<struts>
-	<constant name="struts.objectFactory" value="spring" />
 	<package name="default" extends ="struts-default" namespace="/">
-		<action name="userAction_*" class="userAction" method="{1}">
+	   <interceptors>
+	   <interceptor name="LoginCheck" class="interfilter.Logincheck"/>
+	   <interceptor-stack name="difinitedStack">
+	   <interceptor-ref name="LoginCheck"></interceptor-ref>
+	   <interceptor-ref name="defaultStack"></interceptor-ref>
+	   </interceptor-stack>
+	   </interceptors>
+		<action name="user_*" class="userAction" method="{1}">
+		<!-- <interceptor-ref name="difinitedStack"></interceptor-ref> -->
+			<result name="success">/index.jsp</result>
+		</action>
+		<action name="employee_*" class="employeeAction" method="{1}">
+		<!-- <interceptor-ref name="difinitedStack"></interceptor-ref> -->
 			<result name="success">/index.jsp</result>
 		</action>
 	</package>
-	
 	</struts>

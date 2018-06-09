@@ -7,19 +7,19 @@ import service.SalaryService;
 
 public class SalaryServiceImpl implements SalaryService{
 
-	public Integer saveSalary() {
+	public Integer saveSalary(Salary salary) {
 
 		return null;
 	}
 
 	@Override
-	public Integer deleteSalary() {
+	public Integer deleteSalary(Salary salary) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer updateSalary() {
+	public Integer updateSalary(Salary salary) {
 		// TODO Auto-generated method stub
 		return null;
 	}
