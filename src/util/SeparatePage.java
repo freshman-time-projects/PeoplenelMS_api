@@ -1,10 +1,9 @@
 package util;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionSupport;
 
+import customdefinited.EDObjetPackage;
 import entity.EmployeeAndDepartment;
 
 public class SeparatePage extends ActionSupport{
@@ -34,35 +34,36 @@ public class SeparatePage extends ActionSupport{
 	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
 		this.hibernateTemplate = hibernateTemplate;
 	}
-	public static void separatePage(){
+	public static List<EmployeeAndDepartment> separatePage(int totalCount){
 		try {
-			JSONObject jsonObject = JsonReader.receivePost(GetRequestorResponse.getRequest());
-			Integer current = (Integer)jsonObject.get("current");
-			Integer pageSize = (Integer)jsonObject.get("size");
-			Integer totalCount = (Integer)jsonObject.get("totalCount");
-			if(current==0)
+//			JSONObject jsonObject = JsonReader.receivePost(GetRequestorResponse.getRequest());
+			Integer current = Integer.parseInt(GetRequestorResponse.getRequest().getParameter("current")==null?"1":GetRequestorResponse.getRequest().getParameter("current"));
+			Integer pageSize =  Integer.parseInt(GetRequestorResponse.getRequest().getParameter("size")==null?"4":GetRequestorResponse.getRequest().getParameter("size"));
+			System.out.println(current+"**************"+totalCount);
+			if(current==0||current==null)
 				current=1;
+			if(pageSize==0||pageSize==null)
+				pageSize=10;
 			int maxValue=pageSize*current;
 			if(maxValue>totalCount){
 				maxValue=totalCount;
 			}
-				
 			//sql分頁
 			Session session = sessionFactory.openSession();
 			Transaction transaction = session.beginTransaction();
-			List<EmployeeAndDepartment> list = session.createSQLQuery(GetSQLYuJu.SEPERATEPAGE)
-					.addEntity(EmployeeAndDepartment.class)
-					.setParameter(1,maxValue-pageSize+1)
-					.setParameter(2,maxValue)
+			List<Object[]> list = session.createSQLQuery(GetSQLYuJu.SEPERATEPAGE)
+					.setParameter(0,maxValue%pageSize==0?(maxValue-pageSize):(maxValue-maxValue%pageSize))
+					.setParameter(1,maxValue%pageSize==0?pageSize:(maxValue%pageSize))
 					.list();
+			List<EmployeeAndDepartment> employeeList = EDObjetPackage.getEDList(list);
 			PrintWriter out=null;
-			out = JsonUtil.getHeader();
+		/*	out = JsonUtil.getHeader();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-			String msg = gson.toJson(list);
-			out.print(msg);
-		} catch (IOException e) {
+			JSONArray msg = JSONArray.fromObject(employeeList);*/
+			return employeeList;
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		return null;
 	}
 }

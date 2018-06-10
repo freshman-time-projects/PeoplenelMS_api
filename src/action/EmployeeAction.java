@@ -2,7 +2,9 @@ package action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import service.EmployeeService;
 import util.JsonUtil;
@@ -15,6 +17,7 @@ import entity.Employee;
 
 public class EmployeeAction extends ActionSupport {
 	private EmployeeService  employeeService;
+	Map<String, Object> res = new HashMap<String, Object>();
 	public EmployeeService getEmployeeService() {
 		return employeeService;
 	}
@@ -43,8 +46,10 @@ public class EmployeeAction extends ActionSupport {
 		 try {
 		   PrintWriter out = JsonUtil.getHeader();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-			String msg = gson.toJson(list);
-			out.println(msg);
+			res.put("code",0);
+			res.put("content",list);
+			String data = gson.toJson(res);
+			out.println(data);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

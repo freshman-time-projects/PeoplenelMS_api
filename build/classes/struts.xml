@@ -14,7 +14,7 @@
 	   </interceptor-stack>
 	   </interceptors>
 	   <!-- 全局拦截器 -->
-	   <default-interceptor-ref name="difinitedStack"></default-interceptor-ref>
+	  <!--  <default-interceptor-ref name="difinitedStack"></default-interceptor-ref> -->
 	   <!-- 失败之后去向 -->
 	   <global-results>
 	   <result name="input">/index.jsp</result>

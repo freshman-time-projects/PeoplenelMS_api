@@ -31,7 +31,6 @@ public class UserAction extends ActionSupport {
 	public UserService getUserService() {
 		return userService;
 	}
-
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
@@ -142,7 +141,7 @@ public class UserAction extends ActionSupport {
 
 	public String getPartUser() {
 		try {
-			String jsoon = "{" + JsonUtil.getStrResponse() + "}";
+			String jsoon =  JsonUtil.getStrResponse();
 			JSONObject jsonobject = JSONObject.fromObject(jsoon);
 			String data = jsonobject.getString("data");
 			List<User> list = userService.getPartUser(data);
@@ -156,7 +155,7 @@ public class UserAction extends ActionSupport {
 		return null;
 	}
 	public String separatePage(){
-		SeparatePage.separatePage();		
+		/*SeparatePage.separatePage(list.size());*/		
 		return null;
 	}
 }
