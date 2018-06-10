@@ -2,11 +2,31 @@ package dao.impl;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+
 import dao.DepartmentDAO;
 import entity.Department;
 
 public class DepartmentDAOImpl implements DepartmentDAO {
-	@Override
+	private SessionFactory sessionFactory;
+	private HibernateTemplate hibernateTemplate;
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	public HibernateTemplate getHibernateTemplate() {
+		return hibernateTemplate;
+	}
+
+	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+		this.hibernateTemplate = hibernateTemplate;
+	}
+
 	public void saveDepartment(Department department) {
 		// TODO Auto-generated method stub
 		

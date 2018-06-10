@@ -6,10 +6,10 @@ import entity.User;
 
 public interface UserService {
 public Integer login(User user);
-public Integer saveUser(User user);
-public Integer deleteUser(User user);
-public Integer updateUser(User user);
+public boolean saveUser(User user);
+public boolean deleteUser(User user);
+public boolean updateUser(User user);
 public List<User> getAllUser();
-public List<User> getPartUser();
-public User getUser();
+public List<User> getPartUser(String string);
+public User getUser(User user);
 }

@@ -1,25 +1,37 @@
 package service.impl;
 import java.util.List;
 
-import entity.Recruit;
 import service.RecruitService;
+import dao.RecruitDAO;
+import entity.Recruit;
 public class RecruitServiceImpl implements RecruitService {
-	@Override
-	public Integer saveRecruit(Recruit recruit) {
-		// TODO Auto-generated method stub
-		return null;
+	private RecruitDAO recruitDAO;
+	public RecruitDAO getRecruitDAO() {
+		return recruitDAO;
+	}
+
+	public void setRecruitDAO(RecruitDAO recruitDAO) {
+		this.recruitDAO = recruitDAO;
 	}
 
 	@Override
-	public Integer deleteRecruit(Recruit recruit) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean saveRecruit(Recruit recruit) {
+		if(recruitDAO.saveRecruit(recruit))
+		    return true;
+		return false;
+	}
+	@Override
+	public boolean deleteRecruit(Recruit recruit) {
+		if(recruitDAO.deleteRecruit(recruit))
+			return true;
+		return false;
 	}
 
 	@Override
-	public Integer updateRecruit(Recruit recruit) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean updateRecruit(Recruit recruit) {
+		if(recruitDAO.UpdateRecruit(recruit))
+			return true;
+		return false;
 	}
 
 	public List<Recruit> getAllRecruit() {
@@ -29,13 +41,14 @@ public class RecruitServiceImpl implements RecruitService {
 
 	@Override
 	public List<Recruit> getPartRecruit() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	@Override
 	public Recruit getRecruit() {
-		// TODO Auto-generated method stub
+
+		
 		return null;
 	}
 }

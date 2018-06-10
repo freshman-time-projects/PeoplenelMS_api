@@ -79,7 +79,7 @@
 			id="pt1" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pt1" />
 	</aop:config>
-	<!-- dao的bean类型 -->
+	<!-- ***********************************0dao的bean类型 ***************************************-->
 	<bean id="userDaoImpl" class="dao.impl.UserDAOImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 		<property name="sessionFactory" ref="sessionFactory"></property>
@@ -88,20 +88,43 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	
-	<!-- services的实体类bean -->
+	<bean id="employeeAndDepartmentDAOImpl" class="dao.impl.EmployeeAndDepartmentDAOImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="separatePage" class="util.SeparatePage">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="recruitDAOImpl" class="dao.impl.RecruitDAOImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- *************************************services的实体类bean******************************** -->
 	<bean id="userServiceImpl" class="service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDaoImpl"></property>
 	</bean>
 	<bean id="employeeServiceImpl" class="service.impl.EmployeeServiceImpl">
 		<property name="employeeDAO" ref="employeeDaoImpl"></property>
 	</bean>
-	<!-- action的实体类bean -->
+	<bean id="employeeAndDepartmentServiceImpl" class="service.impl.EmployeeAndDepartmentServiceImpl">
+		<property name="employeeAndDepartmentDAO" ref="employeeAndDepartmentDAOImpl"></property>
+	</bean>
+	<bean id="recruitServiceImpl" class="service.impl.RecruitServiceImpl">
+		<property name="recruitDAO" ref="recruitDAOImpl"></property>
+	</bean>
+	
+	<!-- *********************************action的实体类bean**************************************** -->
 	<bean id="userAction" class="action.UserAction">
 		<property name="userService" ref="userServiceImpl" />
 	</bean>
 	<bean id="employeeAction" class="action.EmployeeAction">
 		<property name="employeeService" ref="employeeServiceImpl" />
 	</bean>
-
+	<bean id="employeeAndDepartmentAction" class="action.EmployeeAndDepartmentAction">
+		<property name="employeeAndDepartmentService" ref="employeeAndDepartmentServiceImpl" />
+	</bean>
+	<bean id="recruitAction" class="action.RecruitAction">
+		<property name="recruitService" ref="recruitServiceImpl" />
+	</bean>
 </beans>

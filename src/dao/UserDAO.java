@@ -5,10 +5,10 @@ import java.util.List;
 import entity.User;
 
 public interface UserDAO {
-	public void saveUser(User user);
-	public Integer deleteUser(User user);
-	public Integer UpdateUser(User user);
+	public boolean saveUser(User user);
+	public boolean deleteUser(User user);
+	public boolean UpdateUser(User user);
 	public List<User> getAllUser();
-	public List<User> getPartUser();
-	public User getUser();
+	public List<User> getPartUser(String data);
+	public User getUser(User user);
 }

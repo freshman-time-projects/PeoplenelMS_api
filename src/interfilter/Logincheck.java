@@ -18,9 +18,7 @@ public class Logincheck extends MethodFilterInterceptor{
 	protected String doIntercept(ActionInvocation invoke) throws Exception{
     HttpSession session =  ServletActionContext.getRequest().getSession();
     HttpServletResponse response = ServletActionContext.getResponse();
-    String user = (String)session.getAttribute("login");
-    System.out.println(user);
-    System.out.println(user==null);
+    String user = (String)session.getAttribute("username");
 		if(user==null||user==""){
 			Map<String,Object>map = new HashMap<String,Object>();
 			map.put("code",1);
@@ -32,9 +30,4 @@ public class Logincheck extends MethodFilterInterceptor{
 		}
 		return invoke.invoke();
 	}
-	
-	
-	
-	
-
 }

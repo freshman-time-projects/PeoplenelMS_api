@@ -13,7 +13,9 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 public class JsonUtil extends ActionSupport{
-	public static String getStrResponse(){  
+	public static String getStrResponse() throws IOException{ 
+		//得到跨域
+		getHeader();
         ActionContext ctx = ActionContext.getContext();  
         HttpServletRequest request = (HttpServletRequest)ctx.get(ServletActionContext.HTTP_REQUEST);     
         InputStream inputStream;  

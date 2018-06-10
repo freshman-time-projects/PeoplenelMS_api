@@ -5,18 +5,28 @@
 	<struts>
 	<package name="default" extends ="struts-default" namespace="/">
 	   <interceptors>
-	   <interceptor name="LoginCheck" class="interfilter.Logincheck"/>
+	   <interceptor name="LoginCheck" class="interfilter.Logincheck">
+	   <param name="excludeMethods">login</param>
+	   </interceptor>
 	   <interceptor-stack name="difinitedStack">
 	   <interceptor-ref name="LoginCheck"></interceptor-ref>
 	   <interceptor-ref name="defaultStack"></interceptor-ref>
 	   </interceptor-stack>
 	   </interceptors>
+	   <!-- 全局拦截器 -->
+	   <default-interceptor-ref name="difinitedStack"></default-interceptor-ref>
+	   <!-- 失败之后去向 -->
+	   <global-results>
+	   <result name="input">/index.jsp</result>
+	   </global-results>
+	   
 		<action name="user_*" class="userAction" method="{1}">
-		<!-- <interceptor-ref name="difinitedStack"></interceptor-ref> -->
 			<result name="success">/index.jsp</result>
 		</action>
 		<action name="employee_*" class="employeeAction" method="{1}">
-		<!-- <interceptor-ref name="difinitedStack"></interceptor-ref> -->
+			<result name="success">/index.jsp</result>
+		</action>
+		<action name="employeeAnddepartment_*" class="employeeAndDepartmentAction" method="{1}">
 			<result name="success">/index.jsp</result>
 		</action>
 	</package>
