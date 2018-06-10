@@ -19,6 +19,7 @@ public class Logincheck extends MethodFilterInterceptor{
     HttpSession session =  ServletActionContext.getRequest().getSession();
     HttpServletResponse response = ServletActionContext.getResponse();
     String user = (String)session.getAttribute("username");
+    System.out.println("ssss:"+user);
 		if(user==null||user==""){
 			Map<String,Object>map = new HashMap<String,Object>();
 			map.put("code",1);

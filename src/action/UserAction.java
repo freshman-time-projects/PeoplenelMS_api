@@ -9,13 +9,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
 import org.apache.struts2.ServletActionContext;
 
-import net.sf.json.JSONObject;
 import service.UserService;
 import util.GetRequestorResponse;
 import util.JsonUtil;
 import util.ObjectToJson;
+import util.SeparatePage;
 
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
@@ -25,7 +27,7 @@ import entity.User;
 
 public class UserAction extends ActionSupport {
 	private UserService userService;
-
+	Map<String, Object> res = new HashMap<String, Object>();
 	public UserService getUserService() {
 		return userService;
 	}
@@ -34,22 +36,23 @@ public class UserAction extends ActionSupport {
 		this.userService = userService;
 	}
  ///测试成功
-	public String login() {
+	public String login() throws IOException {
 		HttpSession session = GetRequestorResponse.getSession();
 		HttpServletRequest request = GetRequestorResponse.getRequest();
+		System.out.println("uuuus111"+ActionContext.getContext().getSession().get("username"));
+		Gson gson = new Gson();
+		PrintWriter out = JsonUtil.getHeader();
 		try {
 			// 处理跨域
-			PrintWriter out = JsonUtil.getHeader();
-			/*String jsoon = "{" + JsonUtil.getStrResponse() + "}";
+			String jsoon = JsonUtil.getStrResponse();
 			JSONObject jsonObject = JSONObject.fromObject(jsoon);
-			User user = (User) JSONObject.toBean(jsonObject, User.class);*/
-			User user = new User();
-			user.setUsername("xiao");
-			user.setPassword("ww");
+			User user = (User) JSONObject.toBean(jsonObject, User.class);
+			System.out.println(user);
+		/*	User user = new User();
+			user.setUsername("ee");
+			user.setPassword("ee");*/
 			// 判断是否登录，登录返回1，相反返回0
 			int flag = userService.login(user);
-			Gson gson = new Gson();
-			Map<String, Object> res = new HashMap<String, Object>();
 			// Gson 传输数据、
 			if (flag > 0&& request.getSession().getAttribute("username") != null) {
 				res.put("code", 2);
@@ -58,7 +61,8 @@ public class UserAction extends ActionSupport {
 			}
 			if (flag > 0) {
 				ActionContext.getContext().getSession().put("username", user.getUsername());
-				res.put("code", 0);
+					System.out.println("uuuus"+ActionContext.getContext().getSession().get("username"));
+					res.put("code", 0);
 				res.put("msg", "欢迎回来");
 			}
 			if (flag == 0) {
@@ -67,8 +71,11 @@ public class UserAction extends ActionSupport {
 			}
 			String msg = gson.toJson(res);
 			out.print(msg);
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			res.put("code", 6);
+			res.put("msg", "测试接口");
+			String msg = gson.toJson(res);
+			out.print(msg);
 		}
 		return null;
 	}
@@ -146,6 +153,10 @@ public class UserAction extends ActionSupport {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
+	}
+	public String separatePage(){
+		SeparatePage.separatePage();		
 		return null;
 	}
 }

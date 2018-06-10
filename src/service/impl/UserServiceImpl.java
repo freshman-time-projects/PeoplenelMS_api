@@ -21,7 +21,6 @@ public class UserServiceImpl extends ActionSupport implements UserService {
 	public Integer login(User user){
 		if(userDao.getUser(user)==null)
 		return 0;
-		
 		return 1;
 	}
 	@Override

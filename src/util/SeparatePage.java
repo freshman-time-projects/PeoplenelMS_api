@@ -20,8 +20,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import entity.EmployeeAndDepartment;
 
 public class SeparatePage extends ActionSupport{
-	private SessionFactory sessionFactory;
-	private HibernateTemplate hibernateTemplate;
+	private static SessionFactory sessionFactory;
+	private static HibernateTemplate hibernateTemplate;
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
@@ -34,7 +34,7 @@ public class SeparatePage extends ActionSupport{
 	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
 		this.hibernateTemplate = hibernateTemplate;
 	}
-	public void separatePage(){
+	public static void separatePage(){
 		try {
 			JSONObject jsonObject = JsonReader.receivePost(GetRequestorResponse.getRequest());
 			Integer current = (Integer)jsonObject.get("current");

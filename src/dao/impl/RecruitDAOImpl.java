@@ -75,6 +75,8 @@ public class RecruitDAOImpl implements RecruitDAO {
 
 	@Override
 	public Recruit getRecruit(Recruit recruit) {
+		if( hibernateTemplate.find(GetSQLYuJu.RECRUITOBJECT,new String[] { recruit.getName(),recruit.getR_id().toString()}).size()==0)
+			return null;
 		return (Recruit) hibernateTemplate.find(GetSQLYuJu.RECRUITOBJECT,new String[] { recruit.getName(),recruit.getR_id().toString()}).get(0);
 	}
 

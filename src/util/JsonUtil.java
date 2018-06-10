@@ -17,7 +17,7 @@ public class JsonUtil extends ActionSupport{
 		//得到跨域
 		getHeader();
         ActionContext ctx = ActionContext.getContext();  
-        HttpServletRequest request = (HttpServletRequest)ctx.get(ServletActionContext.HTTP_REQUEST);     
+        HttpServletRequest request = (HttpServletRequest)ctx.get(ServletActionContext.HTTP_REQUEST);   
         InputStream inputStream;  
         String strResponse = "";  
         try {  

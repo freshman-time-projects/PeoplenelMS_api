@@ -78,6 +78,8 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Override
 	public User getUser(User user) {
+		if( hibernateTemplate.find(GetSQLYuJu.LOGINCHECK,new String[] { user.getUsername(), user.getPassword() }).size()==0)
+			return null;
 		return (User) hibernateTemplate.find(GetSQLYuJu.LOGINCHECK,new String[] { user.getUsername(), user.getPassword() }).get(0);
 	}
 }
