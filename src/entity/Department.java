@@ -2,10 +2,23 @@ package entity;
 
 import java.util.Set;
 
+import com.google.gson.annotations.Expose;
+
 public class Department {
+	 @Override
+	public String toString() {
+		return "Department [d_id=" + d_id + ", name=" + name + ", manager="
+				+ manager + ", description=" + description + ", manyEmployee="
+				+ manyEmployee + "]";
+	}
+	@Expose
 	private Integer d_id;
+	 @Expose
 	private String name;
+	 @Expose
 	private String manager;
+	 @Expose
+	private String description;
 	private Set<Employee> manyEmployee;
 	
 	public Set<Employee> getManyEmployee() {
@@ -13,6 +26,13 @@ public class Department {
 	}
 	public void setManyEmployee(Set<Employee> manyEmployee) {
 		this.manyEmployee = manyEmployee;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public Integer getD_id() {
 		return d_id;

@@ -14,6 +14,7 @@ import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 
 import service.UserService;
+import sql.GetSQLYuJu;
 import util.GetRequestorResponse;
 import util.JsonUtil;
 import util.ObjectToJson;
@@ -38,7 +39,6 @@ public class UserAction extends ActionSupport {
 	public String login() throws IOException {
 		HttpSession session = GetRequestorResponse.getSession();
 		HttpServletRequest request = GetRequestorResponse.getRequest();
-		System.out.println("uuuus111"+ActionContext.getContext().getSession().get("username"));
 		Gson gson = new Gson();
 		PrintWriter out = JsonUtil.getHeader();
 		try {
@@ -46,7 +46,6 @@ public class UserAction extends ActionSupport {
 			String jsoon = JsonUtil.getStrResponse();
 			JSONObject jsonObject = JSONObject.fromObject(jsoon);
 			User user = (User) JSONObject.toBean(jsonObject, User.class);
-			System.out.println(user);
 		/*	User user = new User();
 			user.setUsername("ee");
 			user.setPassword("ee");*/
@@ -63,17 +62,20 @@ public class UserAction extends ActionSupport {
 					System.out.println("uuuus"+ActionContext.getContext().getSession().get("username"));
 					res.put("code", 0);
 				res.put("msg", "欢迎回来");
+				res.put("content",userService.getUser(user));
 			}
 			if (flag == 0) {
 				res.put("code", 1);
 				res.put("msg", "登录失败，用户名或密码错误");
 			}
 			String msg = gson.toJson(res);
+			System.out.println(msg);
 			out.print(msg);
 		} catch (Exception e) {
 			res.put("code", 6);
 			res.put("msg", "测试接口");
-			String msg = gson.toJson(res);
+			JSONObject msg = JSONObject.fromObject(res);
+			System.out.println(msg);
 			out.print(msg);
 		}
 		return null;
@@ -81,13 +83,14 @@ public class UserAction extends ActionSupport {
 
 	public String add() {
 		try {
-			String jsoon = "{" + JsonUtil.getStrResponse() + "}";
+			String jsoon =JsonUtil.getStrResponse();
 			JSONObject jsonobject = JSONObject.fromObject(jsoon);
 			User user=  (User)JSONObject.toBean(jsonobject,User.class);
 			if(userService.saveUser(user))
              ServletActionContext.getResponse().getWriter().print("{code:0}");//有疑问待商量	保存成功		
 			 ServletActionContext.getResponse().getWriter().print("{code:3}");//保存失败
-		} catch (IOException e) {
+		} catch (Exception e) {
+			System.out.println("+++++++++++++++++出错++");
 			e.printStackTrace();
 		}
 		return null;
@@ -95,7 +98,7 @@ public class UserAction extends ActionSupport {
 
 	public String romove() {
 		try {
-			String jsoon = "{" + JsonUtil.getStrResponse() + "}";
+			String jsoon = JsonUtil.getStrResponse();
 			JSONObject jsonobject = JSONObject.fromObject(jsoon);
 			User user=  (User)JSONObject.toBean(jsonobject,User.class);
 			if(userService.deleteUser(user))
@@ -109,7 +112,7 @@ public class UserAction extends ActionSupport {
 
 	public String update() {
 		try {
-			String jsoon = "{" + JsonUtil.getStrResponse() + "}";
+			String jsoon = JsonUtil.getStrResponse();
 			JSONObject jsonobject = JSONObject.fromObject(jsoon);
 			User user=  (User)JSONObject.toBean(jsonobject,User.class);
 			if(userService.updateUser(user))
@@ -121,15 +124,28 @@ public class UserAction extends ActionSupport {
 		return null;
 	}
 
-	public String getAll() {
+	public String getAll_page() throws IOException {
 		List<User> list = userService.getAllUser();
+		PrintWriter out = JsonUtil.getHeader();
+		Map<String,Object>map = new HashMap<>();
+		if(list!=null&&list.size()!=0){
 		try {
-			PrintWriter out = JsonUtil.getHeader();
+			/*返回employeelist数组   SeparatePage.separatePage(list.size(),"from User");*/
+			map.put("code",0);
+			map.put("content",SeparatePage.ueerSeparatePage(list.size(),GetSQLYuJu.USERALLPAGE));
+			/*map.put("content",list);*/
 			Gson gson = new Gson();
-			String msg = gson.toJson(list);
+			JSONObject msg = JSONObject.fromObject(map);
 			out.println(msg);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		}else{
+			map.put("code",3);
+			map.put("content","操作异常");
+			Gson gson = new Gson();
+			JSONObject msg = JSONObject.fromObject(map);
+			out.println(msg);
 		}
 		return null;
 	}
@@ -157,5 +173,22 @@ public class UserAction extends ActionSupport {
 	public String separatePage(){
 		/*SeparatePage.separatePage(list.size());*/		
 		return null;
+	}
+	public String logout() throws Exception{
+		System.out.println("5555555");
+		Gson gson = new Gson();
+		PrintWriter out = JsonUtil.getHeader();
+		Map<String, Object> map = new HashMap<String, Object>();
+        if(GetRequestorResponse.getSession().getAttribute("username")!=null){	
+        	GetRequestorResponse.getSession().removeAttribute("username");
+        	map.put("code",0);
+            map.put("msg","注销成功");
+        }else{
+        	map.put("code",3);
+            map.put("msg","已超时,请登录");
+        }
+        JSONObject object = JSONObject.fromObject(map);
+        out.print(object);
+        return null;
 	}
 }

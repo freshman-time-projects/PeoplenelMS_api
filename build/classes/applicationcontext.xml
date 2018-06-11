@@ -35,7 +35,7 @@
 		<!-- 配置hibernate信息 -->
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -65,6 +65,8 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<!-- 配置通知 通知事务管理要管理的事务方法 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager"/>  -->
+	
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="*" propagation="REQUIRED" read-only="false" />
@@ -93,10 +95,13 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="separatePage" class="util.SeparatePage">
-		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="recruitDAOImpl" class="dao.impl.RecruitDAOImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="departmentDAOImpl" class="dao.impl.DepartmentDAOImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
@@ -113,7 +118,9 @@
 	<bean id="recruitServiceImpl" class="service.impl.RecruitServiceImpl">
 		<property name="recruitDAO" ref="recruitDAOImpl"></property>
 	</bean>
-	
+	<bean id="departmentServiceImpl" class="service.impl.DepartmentServiceImpl">
+		<property name="departmentDAO" ref="departmentDAOImpl"></property>
+	</bean>
 	<!-- *********************************action的实体类bean**************************************** -->
 	<bean id="userAction" class="action.UserAction">
 		<property name="userService" ref="userServiceImpl" />
@@ -126,5 +133,8 @@
 	</bean>
 	<bean id="recruitAction" class="action.RecruitAction">
 		<property name="recruitService" ref="recruitServiceImpl" />
+	</bean>
+	<bean id="departmentAction" class="action.DepartmentAction">
+		<property name="departmentService" ref="departmentServiceImpl" />
 	</bean>
 </beans>

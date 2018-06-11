@@ -14,7 +14,7 @@
 	   </interceptor-stack>
 	   </interceptors>
 	   <!-- 全局拦截器 -->
-	  <!--  <default-interceptor-ref name="difinitedStack"></default-interceptor-ref> -->
+	   <!--  <default-interceptor-ref name="difinitedStack"></default-interceptor-ref>  -->
 	   <!-- 失败之后去向 -->
 	   <global-results>
 	   <result name="input">/index.jsp</result>
@@ -27,6 +27,9 @@
 			<result name="success">/index.jsp</result>
 		</action>
 		<action name="employeeAnddepartment_*" class="employeeAndDepartmentAction" method="{1}">
+			<result name="success">/index.jsp</result>
+		</action>
+		<action name="department_*" class="departmentAction" method="{1}">
 			<result name="success">/index.jsp</result>
 		</action>
 	</package>

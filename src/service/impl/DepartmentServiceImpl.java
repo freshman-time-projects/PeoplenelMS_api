@@ -2,43 +2,53 @@ package service.impl;
 
 import java.util.List;
 
-import entity.Department;
 import service.DepartmentService;
+import customdefinited.customdentity.CustomDepartment;
+import dao.DepartmentDAO;
+import entity.Department;
 public class DepartmentServiceImpl implements DepartmentService {
-	public Integer saveDepartment(Department department) {
-		// TODO Auto-generated method stub
-		return null;
+	private DepartmentDAO departmentDAO;
+	public DepartmentDAO getDepartmentDAO() {
+		return departmentDAO;
+	}
+
+	public void setDepartmentDAO(DepartmentDAO departmentDAO) {
+		this.departmentDAO = departmentDAO;
+	}
+
+	public boolean saveDepartment(Department department) {
+		return departmentDAO.saveDepartment(department)?true:false;
 	}
 
 	@Override
-	public Integer deleteDepartment(Department department) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean deleteDepartment(Department department) {
+		return departmentDAO.deleteDepartment(department)?true:false;
 	}
 
 	@Override
-	public Integer updateDepartment(Department department) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean updateDepartment(Department department) {
+		System.out.println("ssssssss");
+		return departmentDAO.UpdateDepartment(department)?true:false;
 	}
 
 	@Override
 	public List<Department> getAllDepartment() {
-		// TODO Auto-generated method stub
-		return null;
+			return departmentDAO.getAllDepartment()==null?null:departmentDAO.getAllDepartment();
 	}
 
 	@Override
-	public List<Department> getPartDepartment() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Department> getPartDepartment(String msg) {
+		System.out.println("211111111");
+		return departmentDAO.getPartDepartment(msg)==null?null:departmentDAO.getPartDepartment(msg);
 	}
 
 	@Override
-	public Department getDepartment() {
-		// TODO Auto-generated method stub
-		return null;
+	public Department getDepartment(Department department) {
+		return departmentDAO.getDepartment(department)==null?null:departmentDAO.getDepartment(department);
 	}
-
-
+	
+	
+	public List<CustomDepartment>  getSum(){
+		return departmentDAO.getSum()==null?null:departmentDAO.getSum();
+	}
 }

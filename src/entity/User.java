@@ -1,7 +1,6 @@
 package entity;
 
 public class User {
-	
 	private Integer u_id;
 	private String username;
 	private String password;

@@ -49,7 +49,7 @@ public class EmployeeAction extends ActionSupport {
 			res.put("code",0);
 			res.put("content",list);
 			String data = gson.toJson(res);
-			out.println(data);
+			out.print(data);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

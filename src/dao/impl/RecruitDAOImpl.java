@@ -41,7 +41,6 @@ public class RecruitDAOImpl implements RecruitDAO {
 	@Override
 	public boolean deleteRecruit(Recruit recruit) {
 		try {
-			//妈的，既然是void类型
 			hibernateTemplate.delete(recruit);
 			return true;
 		} catch (DataAccessException e) {
@@ -53,7 +52,6 @@ public class RecruitDAOImpl implements RecruitDAO {
 	@Override
 	public boolean UpdateRecruit(Recruit recruit) {
 		try {
-			//妈的，既然是void类型
 			hibernateTemplate.update(recruit);
 			return true;
 		} catch (DataAccessException e) {

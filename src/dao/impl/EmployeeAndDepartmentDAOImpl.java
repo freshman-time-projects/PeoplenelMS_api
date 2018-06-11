@@ -32,8 +32,9 @@ public class EmployeeAndDepartmentDAOImpl implements EmployeeAndDepartmentDAO{
 	  Session session= sessionFactory.openSession();
 	  Transaction transaction = session.beginTransaction();
 	  Query query = session.createSQLQuery(GetSQLYuJu.SQLEDPART);
-	  List<Object[]>list = query.list();	
+	  List<Object[]>list = query.list();
 	  transaction.commit();
+	  session.close();
 		return  EDObjetPackage.getEDList(list);
 	}
 

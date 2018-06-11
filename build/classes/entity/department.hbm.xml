@@ -3,15 +3,16 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
     <hibernate-mapping>
-    <class name="entity.Department" table="department">
+    <class name="entity.Department" table="department" lazy="true">
     <id name="d_id" column="d_id" type="java.lang.Integer">
     <generator class="native"></generator>
     </id>
     <property name="name" column="name" type="java.lang.String"></property>
+    <property name="description" column="description" type="java.lang.String"></property>
     <property name="manager" column="manager" type="java.lang.String"></property>
-    <set name="manyEmployee" inverse="true">
+    <set name="manyEmployee" inverse="true" cascade="save-update,delete">
     <key column="d_id"/>
-    <one-to-many  class="entity.Employee"/>
+    <one-to-many  class="entity.Employee" />
     </set>
     </class>
     </hibernate-mapping>
