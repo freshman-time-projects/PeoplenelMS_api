@@ -81,16 +81,24 @@ public class UserAction extends ActionSupport {
 		return null;
 	}
 
-	public String add() {
+	public String add() throws IOException {
+		PrintWriter out = JsonUtil.getHeader();
+		Gson gson = new Gson();
 		try {
-			String jsoon =JsonUtil.getStrResponse();
+			String jsoon = JsonUtil.getStrResponse();
 			JSONObject jsonobject = JSONObject.fromObject(jsoon);
 			User user=  (User)JSONObject.toBean(jsonobject,User.class);
-			if(userService.saveUser(user))
-             ServletActionContext.getResponse().getWriter().print("{code:0}");//有疑问待商量	保存成功		
-			 ServletActionContext.getResponse().getWriter().print("{code:3}");//保存失败
-		} catch (Exception e) {
-			System.out.println("+++++++++++++++++出错++");
+			if(userService.saveUser(user)){
+				res.put("code",0);
+				res.put("msg","注册成功，请去登录");
+			}
+			else{
+				res.put("code",3);
+				res.put("msg","注册失败");
+			}
+			String msg = gson.toJson(res);
+			out.print(msg);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;

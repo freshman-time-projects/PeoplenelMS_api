@@ -41,12 +41,16 @@ public class RecruitDAOImpl implements RecruitDAO {
 	@Override
 	public boolean deleteRecruit(Recruit recruit) {
 		try {
-			hibernateTemplate.delete(recruit);
-			return true;
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-			return false;
-		}
+	         if((Recruit)hibernateTemplate.get(Recruit.class,recruit.getR_id())==null){
+	        	 return false;
+	         }else{
+	 			hibernateTemplate.delete((Recruit)hibernateTemplate.get(Recruit.class,recruit.getR_id()));
+	 			return true;
+	         }
+			} catch (DataAccessException e) {
+				e.printStackTrace();
+				return false;
+			}
 	}
 
 	@Override
