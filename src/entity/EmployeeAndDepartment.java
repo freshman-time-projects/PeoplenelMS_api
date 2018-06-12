@@ -20,11 +20,11 @@ public class EmployeeAndDepartment {
 	 @Expose
 	private String school;
 	 @Expose
-	private Integer mobile;
+	private String mobile;
 	 @Expose
 	private String address;
 	 @Expose
-	private String eamil;
+	private String email;
 	 @Expose
 	private String department;// 一对多的部门
 	 public Integer getE_id() {
@@ -75,10 +75,10 @@ public class EmployeeAndDepartment {
 	public void setSchool(String school) {
 		this.school = school;
 	}
-	public Integer getMobile() {
+	public String getMobile() {
 		return mobile;
 	}
-	public void setMobile(Integer mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 	public String getAddress() {
@@ -87,11 +87,12 @@ public class EmployeeAndDepartment {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getEamil() {
-		return eamil;
+	
+	public String getEmail() {
+		return email;
 	}
-	public void setEamil(String eamil) {
-		this.eamil = eamil;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getDepartment() {
 		return department;

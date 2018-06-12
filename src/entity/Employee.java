@@ -20,7 +20,7 @@ public class Employee {
 	 @Expose
 	private String school;
 	 @Expose
-	private Integer mobile;
+	private String mobile;
 	 @Expose
 	private String address;
 	 @Expose
@@ -99,11 +99,11 @@ public class Employee {
 		this.school = school;
 	}
 
-	public Integer getMobile() {
+	public String getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(Integer mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
