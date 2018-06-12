@@ -17,6 +17,7 @@
     <property name="mobile" column="mobile" type="java.lang.Integer"></property>
     <property name="address" column="address" type="java.lang.String"></property>
     <property name="email" column="email" type="java.lang.String"></property>
+   <!--  <property name="date" column="date" type="java.lang.String"></property> -->
     <many-to-one name="department" class="entity.Department" column="d_id" ></many-to-one>
     <one-to-one name="salary" class="entity.Salary"></one-to-one>
     </class>

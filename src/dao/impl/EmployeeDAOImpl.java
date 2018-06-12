@@ -5,9 +5,9 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import sql.GetSQLYuJu;
 import dao.EmployeeDAO;
 import entity.Employee;
-import entity.User;
 
 public class EmployeeDAOImpl implements EmployeeDAO{
 	private SessionFactory sessionFactory;
@@ -28,21 +28,22 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 		this.hibernateTemplate = hibernateTemplate;
 	}
 
-	public void saveEmployee() {
-		// TODO Auto-generated method stub
-		
+	public boolean saveEmployee(Employee employee) {
+		if(hibernateTemplate.save(employee)!=null)
+			return false;
+		return true;
 	}
 
 	@Override
-	public Integer deleteEmployee() {
+	public boolean deleteEmployee(Employee employee) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
-	public Integer UpdateEmployee() {
+	public boolean UpdateEmployee(Employee employee) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
@@ -52,14 +53,21 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	}
 
 	@Override
-	public List<Employee> getPartEmployee() {
-		// TODO Auto-generated method stub
-		return null;
+	//模糊查询语句,通过id或者name查询
+	public List<Employee> getPartEmployee(String[] datas) {
+		List<Employee> list = (List<Employee>)hibernateTemplate.find(GetSQLYuJu.EMPLOYEE_GET_PART,new String[]{datas[0],datas[1]});
+			if(list==null||list.size()==0){
+				return null;
+			}
+		return list;
 	}
 
 	@Override
-	public Employee getEmployee() {
-		// TODO Auto-generated method stub
+	public Employee getEmployee(Employee employee) {
+		List<Employee> list = (List<Employee>)hibernateTemplate.find(GetSQLYuJu.EMPLOYEE_GET_ONE,employee.getE_id().toString());
+       if(list.size()>0){
+    	  return list.get(0); 
+       };
 		return null;
 	}
 

@@ -26,22 +26,22 @@ public class EmployeeAction extends ActionSupport {
 		this.employeeService = employeeService;
 	}
 
-	public String addEmployee() {
+	public String add() {
 		
-		return "";
+		return null;
 	}
 
-	public String romoveEmployee() {
+	public String romove() {
 
-		return "";
+		return null;
 	}
 
-	public String updateEmployee() {
+	public String update() {
 
-		return "";
+		return null;
 	}
 
-	public String getAllEmployee() {
+	public String getAll() {
 		 List<Employee> list = employeeService.getAllEmployee();
 		 try {
 		   PrintWriter out = JsonUtil.getHeader();
@@ -56,13 +56,15 @@ public class EmployeeAction extends ActionSupport {
 			return null;
 	}
 
-	public String getEmployee() {
+	public String getOne() {
 
-		return "";
+		
+		
+		return null;
 	}
 
-	public String getPartEmployee() {
+	public String getPart() {
 
-		return "";
+		return null;
 	}
 }

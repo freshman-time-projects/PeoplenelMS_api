@@ -95,20 +95,22 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 
 	@Override
 	public Department getDepartment(Department department) {
-		List<Department> memberList = (List<Department>)hibernateTemplate.find(GetSQLYuJu.DEPARTMENTMEMBER,department.getName());
-		if(memberList.size()==0||memberList==null)
+		List<Department> departmentList = (List<Department>)hibernateTemplate.find(GetSQLYuJu.DEPARTMENTMEMBER,department.getName());
+		if(departmentList.size()==0||departmentList==null)
 		return null;
-		return memberList.get(0);
+		return departmentList.get(0);
 	}
 
 	public List<CustomDepartment> getSum() {
       Session session = sessionFactory.openSession();
       Transaction transaction = session.beginTransaction();
-      List<Object[]>list = session.createSQLQuery(GetSQLYuJu.DEPARTMENTCOUNT).list();
+      List<Object[]>list_in = session.createSQLQuery(GetSQLYuJu.DEPARTMENTCOUNT_EXITS).list();
+      List<Object[]>list_not = session.createSQLQuery(GetSQLYuJu.DEPARTMENTCOUNT_NOT_EXITS).list();
       transaction.commit();
       session.close();
-      if(list==null||list.size()==0)
+      if((list_in==null||list_in.size()==0)&&(list_not==null||list_not.size()==0))
     	  return null;
-      return  EDObjetPackage.getCustomDepartment(list);
+      System.out.println("ssssss");
+      return  EDObjetPackage.getCustomDepartment(list_in,list_not);
 	}
 }

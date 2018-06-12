@@ -132,7 +132,7 @@ public class UserAction extends ActionSupport {
 		try {
 			/*返回employeelist数组   SeparatePage.separatePage(list.size(),"from User");*/
 			map.put("code",0);
-			map.put("content",SeparatePage.ueerSeparatePage(list.size(),GetSQLYuJu.USERALLPAGE));
+			map.put("content",SeparatePage.ueerSeparatePage(list.size(),GetSQLYuJu.USER_ALL_PAGE));
 			/*map.put("content",list);*/
 			Gson gson = new Gson();
 			JSONObject msg = JSONObject.fromObject(map);

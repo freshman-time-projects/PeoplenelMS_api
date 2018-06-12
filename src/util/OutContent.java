@@ -25,19 +25,19 @@ public static  <T> void content(List<T>list) throws Exception{
 	}
 	out.print(message);
 }
-public static void successCotent(Map<String,Object> map) throws Exception{
+public static void successCotent(Map<String,Object> map,String msg) throws Exception{
 	PrintWriter out = JsonUtil.getHeader();
 	JSONObject message=null;
 		map.put("code",0);
-		map.put("msg","成功!");
+		map.put("msg",msg);
 		message=JSONObject.fromObject(map);
 		out.print(message);
 	}
-public static void failCotent(Map<String,Object> map) throws Exception{
+public static void failCotent(Map<String,Object> map,String msg) throws Exception{
 	PrintWriter out = JsonUtil.getHeader();
 	JSONObject message=null;
 		map.put("code",3);
-		map.put("msg","失败!");
+		map.put("msg",msg);
 		message=JSONObject.fromObject(map);
 		out.print(message);
 	}
