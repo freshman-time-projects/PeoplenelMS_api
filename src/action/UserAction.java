@@ -84,23 +84,19 @@ public class UserAction extends ActionSupport {
 	public String add() throws IOException {
 		PrintWriter out = JsonUtil.getHeader();
 		Gson gson = new Gson();
-		try {
-			String jsoon = JsonUtil.getStrResponse();
-			JSONObject jsonobject = JSONObject.fromObject(jsoon);
-			User user=  (User)JSONObject.toBean(jsonobject,User.class);
-			if(userService.saveUser(user)){
-				res.put("code",0);
-				res.put("msg","注册成功，请去登录");
-			}
-			else{
-				res.put("code",3);
-				res.put("msg","注册失败");
-			}
-			String msg = gson.toJson(res);
-			out.print(msg);
-		} catch (IOException e) {
-			e.printStackTrace();
+		String jsoon = JsonUtil.getStrResponse();
+		JSONObject jsonobject = JSONObject.fromObject(jsoon);
+		User user=  (User)JSONObject.toBean(jsonobject,User.class);
+		if(userService.saveUser(user)){
+			res.put("code",0);
+			res.put("msg","注册成功，请去登录");
 		}
+		else{
+			res.put("code",3);
+			res.put("msg","注册失败,可能由于重名等原因");
+		}
+		String msg = gson.toJson(res);
+		out.print(msg);
 		return null;
 	}
 

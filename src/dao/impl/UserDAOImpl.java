@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import sql.GetSQLYuJu;
 import dao.UserDAO;
+import entity.Recruit;
 import entity.User;
 
 public class UserDAOImpl implements UserDAO {
@@ -36,9 +37,14 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Override
 	public boolean saveUser(User user) {
-		if (hibernateTemplate.save(user) != null)
+		if (!hibernateTemplate.find("from entity.User u where u.username =?",user.getUsername()).isEmpty()){
+			System.out.println("已存在");
+			return false;
+		}else{
+			System.out.println("不存在");
+			hibernateTemplate.save(user);
 			return true;
-		return false;
+		}
 	}
 	@Override
 	public boolean deleteUser(User user) {

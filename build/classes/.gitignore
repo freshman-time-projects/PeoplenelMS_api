@@ -1,1 +1,12 @@
+/action
 /api
+/applicationcontext.xml
+/customdefinited
+/dao
+/entity
+/interfilter
+/service
+/sql
+/struts.xml
+/test
+/util
