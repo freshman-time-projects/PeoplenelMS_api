@@ -33,7 +33,7 @@ public class DepartmentAction extends ActionSupport {
 	}
 
 	// 成功
-	public String add() throws IOException {
+	public String add() throws Exception {
 		HttpSession session = GetRequestorResponse.getSession();
 		HttpServletRequest request = GetRequestorResponse.getRequest();
 		Gson gson = new Gson();
@@ -43,45 +43,36 @@ public class DepartmentAction extends ActionSupport {
 			// 处理跨域
 			String jsoon = JsonUtil.getStrResponse();
 			/*
-			 * String jsoon =
-			 * "{'name':'12','description':'45',}";//**************
-			 */JSONObject jsonObject = JSONObject.fromObject(jsoon);
-			Department department = (Department) JSONObject.toBean(jsonObject,
-					Department.class);
+			 * String jsoon = "{'name':'12','description':'45',}";//**************
+			 */
+			JSONObject jsonObject = JSONObject.fromObject(jsoon);
+			Department department = (Department) JSONObject.toBean(jsonObject, Department.class);
 			if (departmentService.saveDepartment(department)) {
-				map.put("code", 0);
-				map.put("content", "保存成功!");
+				OutContent.successCotent(map, "保存成功!");
 			} else {
-				map.put("code", 3);
-				map.put("content", "保存失败!");
+				OutContent.failCotent(map, "保存失败!");
 			}
-			String data = gson.toJson(map);
 			/* JSONObject json = JSONObject.fromObject(map); */
-			out.print(data);
 		} catch (Exception e) {
-			map.put("code", 3);
-			map.put("content", "保存失败!");
+			OutContent.failCotent(map, "保存失败!");
 		}
 		return null;
 	}
-//成功
-	public String romove() throws IOException {
+
+	// 成功"{'d_id':1,'name':'3','description':'34','manager':'2222'}";
+	public String romove() throws Exception {
 		PrintWriter out = JsonUtil.getHeader();
-		String msg ="{'d_id':1,'name':'3','description':'34','manager':'2222'}"; /*JsonUtil.getStrResponse();*/
+		String msg = JsonUtil.getStrResponse();
+		System.out.println("msss"+msg);
 		Map<String, Object> map = new HashMap<String, Object>();
 		JSONObject json = JSONObject.fromObject(msg);
-		Department department = (Department) json
-				.toBean(json, Department.class);
+		Department department = (Department) json.toBean(json, Department.class);
 		if (departmentService.deleteDepartment(department)) {
-			map.put("code", 0);
-			map.put("msg", "删除成功");
+			OutContent.successCotent(map, "删除成功!");
 		} else {
 			map.put("code", 3);
 			map.put("msg", "删除失败");
 		}
-		;
-		JSONObject object = JSONObject.fromObject(map);
-		out.print(object);
 		return null;
 	}
 
@@ -94,13 +85,12 @@ public class DepartmentAction extends ActionSupport {
 		if (msg != null && msg.length() != 0) {
 			JSONObject object = JSONObject.fromObject(msg);
 			System.out.println("5555555" + object);
-			Department department = (Department) object.toBean(object,
-					Department.class);
+			Department department = (Department) object.toBean(object, Department.class);
 			System.out.println("sss");
 			if (departmentService.updateDepartment(department)) {
-				OutContent.successCotent(map);
+				OutContent.successCotent(map, "更新成功!");
 			} else {
-				OutContent.failCotent(map);
+				OutContent.failCotent(map, "更新失败!");
 			}
 		}
 		return null;
@@ -108,21 +98,21 @@ public class DepartmentAction extends ActionSupport {
 
 	// /成功
 	public String getAll() throws Exception {
-		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
-				.create();
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		List<Department> list = departmentService.getAllDepartment();
 		OutContent.content(list);
 		return null;
 	}
 
 	public String getOne() {
+		// 查询单个部门时（用作更新信息）前提给一个对象
 
 		return null;
 	}
 
-	//成功
+	// 成功
 	public String getPart() throws Exception {
-		// 查询部分员工时，必须得给个员工名字
+		// 模糊查询部门时，必须得给个部门名字
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			PrintWriter out = JsonUtil.getHeader();
@@ -134,12 +124,13 @@ public class DepartmentAction extends ActionSupport {
 				OutContent.content(list);
 			}
 		} catch (Exception e) {
-			OutContent.failCotent(map);
+			OutContent.failCotent(map, "查找失败");
 		}
 		return null;
 	}
 
 	public String getSum() throws Exception {
+		System.out.println("9999999999");
 		OutContent.content(departmentService.getSum());
 		return null;
 	}

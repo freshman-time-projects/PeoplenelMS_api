@@ -43,15 +43,25 @@ public class EDObjetPackage {
 		return Dlist;
 	}
 	//******************************自定义转entity 
-	public static List<CustomDepartment> getCustomDepartment(List<Object[]> list) {
+	public static List<CustomDepartment> getCustomDepartment(List<Object[]> list1,List<Object[]> list2) {
 		List<CustomDepartment> CDlist = new ArrayList<CustomDepartment>();
-		for (Object[] object : list) {
+		for (Object[] object : list1) {
 			CustomDepartment customDepartment = new CustomDepartment();
 			customDepartment.setD_id((Integer)object[0]);
 			customDepartment.setName((String) object[1]);
 			customDepartment.setDescription(((String) object[2]));
 			customDepartment.setManager((String) object[3]);
-			customDepartment.setSumpeople((String) object[4]);
+			System.out.println("8888888888"+object[4].toString().getClass());
+			customDepartment.setSumpeople((String) object[4].toString());
+			CDlist.add(customDepartment);
+		}
+		for (Object[] object : list2) {
+			CustomDepartment customDepartment = new CustomDepartment();
+			customDepartment.setD_id((Integer)object[0]);
+			customDepartment.setName((String) object[1]);
+			customDepartment.setDescription(((String) object[2]));
+			customDepartment.setManager((String) object[3]);
+			customDepartment.setSumpeople("0");
 			CDlist.add(customDepartment);
 		}
 		return CDlist;

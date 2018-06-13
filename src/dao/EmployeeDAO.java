@@ -1,12 +1,13 @@
 package dao;
 
 import java.util.List;
+
 import entity.Employee;
 public interface EmployeeDAO {
-	public void saveEmployee();
-	public Integer deleteEmployee();
-	public Integer UpdateEmployee();
+	public boolean saveEmployee(Employee employee);
+	public boolean deleteEmployee(Employee employee);
+	public boolean UpdateEmployee(Employee employee);
 	public List<Employee> getAllEmployee();
-	public List<Employee> getPartEmployee();
-	public Employee getEmployee();
+	public List<Employee> getPartEmployee(String[] datas);
+	public Employee getEmployee(Employee employee);
 }

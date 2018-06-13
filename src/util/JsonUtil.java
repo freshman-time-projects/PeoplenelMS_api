@@ -44,8 +44,4 @@ public class JsonUtil extends ActionSupport{
 		return response.getWriter();
 		
 	}
-	
-	
-	
-	
 }
