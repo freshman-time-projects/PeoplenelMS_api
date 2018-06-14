@@ -140,5 +140,8 @@ public class DepartmentAction extends ActionSupport {
 		OutContent.content(departmentService.getSum());
 		return null;
 	}
-
+	//部门删除的判断
+   public String verify (){
+	   return null ;
+   }
 }

@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import customdefinited.EDObjetPackage;
+import customdefinited.ToVirtualEntity;
 import entity.EmployeeAndDepartment;
 import entity.User;
 
@@ -43,7 +43,8 @@ public class SeparatePage extends ActionSupport{
 					.list();
 			transaction.commit();
 			session.close();
-			List<EmployeeAndDepartment> employeeList = EDObjetPackage.getEDList(list);
+			System.out.println(list.get(0).length+"55555555558888888888888888++++++++++++++++++++++++++++++++++666666666666666666666666");
+			List<EmployeeAndDepartment> employeeList = ToVirtualEntity.getEDList(list);
 			return employeeList;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,7 +73,7 @@ public class SeparatePage extends ActionSupport{
 					.list();
 			transaction.commit();
 			session.close();
-			List<User> userList = EDObjetPackage.getUser(list);
+			List<User> userList = ToVirtualEntity.getUser(list);
 			return userList;
 		} catch (Exception e) {
 			e.printStackTrace();

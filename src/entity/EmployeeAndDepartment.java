@@ -24,10 +24,17 @@ public class EmployeeAndDepartment {
 	 @Expose
 	private String address;
 	 @Expose
-	private String eamil;
+	private String email;
 	 @Expose
 	private String department;// 一对多的部门
-	 public Integer getE_id() {
+	 private Integer d_id;
+	 public Integer getD_id() {
+		return d_id;
+	}
+	public void setD_id(Integer d_id) {
+		this.d_id = d_id;
+	}
+	public Integer getE_id() {
 		return e_id;
 	}
 	public void setE_id(Integer e_id) {
@@ -87,11 +94,11 @@ public class EmployeeAndDepartment {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getEamil() {
-		return eamil;
+	public String getEmail() {
+		return email;
 	}
-	public void setEamil(String eamil) {
-		this.eamil = eamil;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getDepartment() {
 		return department;

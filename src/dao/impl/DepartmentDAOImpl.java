@@ -11,7 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import sql.GetSQLYuJu;
-import customdefinited.EDObjetPackage;
+import customdefinited.ToVirtualEntity;
 import customdefinited.customdentity.CustomDepartment;
 import dao.DepartmentDAO;
 import entity.Department;
@@ -42,6 +42,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 	}
 
 	@Override
+	//删除部门时，需要输入验证密码，当密码正确时删除部门**************-------**********
 	public boolean deleteDepartment(Department department) {
 		List<Department>list = (List<Department>) hibernateTemplate.find("from Department where d_id = ?",department.getD_id());
 		try {
@@ -82,7 +83,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		  List<Object[]>list = query.list();
 		  transaction.commit();
 		  session.close();
-		return list.size()==0||list==null?null:EDObjetPackage.getDList(list);
+		return list.size()==0||list==null?null:ToVirtualEntity.getDList(list);
 	}
   ///成功
 	public List<Department> getPartDepartment(String msg) {
@@ -111,6 +112,6 @@ public class DepartmentDAOImpl implements DepartmentDAO {
       if((list_in==null||list_in.size()==0)&&(list_not==null||list_not.size()==0))
     	  return null;
       System.out.println("ssssss");
-      return  EDObjetPackage.getCustomDepartment(list_in,list_not);
+      return  ToVirtualEntity.getCustomDepartment(list_in,list_not);
 	}
 }

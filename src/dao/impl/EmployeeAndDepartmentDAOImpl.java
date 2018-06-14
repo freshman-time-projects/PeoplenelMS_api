@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
-import customdefinited.EDObjetPackage;
+import customdefinited.ToVirtualEntity;
 import sql.GetSQLYuJu;
 import dao.EmployeeAndDepartmentDAO;
 import entity.EmployeeAndDepartment;
@@ -33,9 +33,10 @@ public class EmployeeAndDepartmentDAOImpl implements EmployeeAndDepartmentDAO{
 	  Transaction transaction = session.beginTransaction();
 	  Query query = session.createSQLQuery(GetSQLYuJu.SQLEDPART);
 	  List<Object[]>list = query.list();
+System.out.println(list.get(0).length+"dddddddddddddddddddddddddddddd");
 	  transaction.commit();
 	  session.close();
-		return  EDObjetPackage.getEDList(list);
+		return  ToVirtualEntity.getEDList(list);
 	}
 
 }

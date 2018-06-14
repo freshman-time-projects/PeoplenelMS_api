@@ -13,7 +13,7 @@ public static  <T> void content(List<T>list) throws Exception{
 	PrintWriter out = JsonUtil.getHeader();
 	Map<String,Object> map = new HashMap<String,Object>();
 	JSONObject message=null;
-	if(list==null){
+	if(list==null||list.size()==0){
 		map.put("code",3);
 		map.put("msg","暂没有值!");
 		message=JSONObject.fromObject(map);

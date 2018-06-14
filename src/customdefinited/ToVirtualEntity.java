@@ -8,10 +8,11 @@ import entity.Department;
 import entity.EmployeeAndDepartment;
 import entity.User;
 
-public class EDObjetPackage {
+public class ToVirtualEntity {
 	public static List<EmployeeAndDepartment> getEDList(List<Object[]> list) {
 		List<EmployeeAndDepartment> EDlist = new ArrayList<EmployeeAndDepartment>();
 		for (Object[] object : list) {
+			System.out.println(object.length+"88888888888888888888888888888888888888888888888888888++++++++");
 			EmployeeAndDepartment employeeAndDepartment = new EmployeeAndDepartment();
 			employeeAndDepartment.setE_id((Integer) (object[0]));
 			employeeAndDepartment.setName((String) (object[1]));
@@ -23,8 +24,9 @@ public class EDObjetPackage {
 			employeeAndDepartment.setSchool((String) (object[7]));
 			employeeAndDepartment.setMobile((Integer) (object[8]));
 			employeeAndDepartment.setAddress((String) (object[9]));
-			employeeAndDepartment.setEamil((String) (object[10]));
+			employeeAndDepartment.setEmail((String) (object[10]));
 			employeeAndDepartment.setDepartment((String) (object[11]));
+			employeeAndDepartment.setD_id((Integer)(object[12]));
 			EDlist.add(employeeAndDepartment);
 		}
 		return EDlist;
@@ -80,6 +82,17 @@ public class EDObjetPackage {
 			userList.add(user);
 		}
 		return userList;
+	}
+	
+	public static Department getDepartment(List<Object[]> list) {
+		Department department = new Department();
+		for (Object[] object : list) {
+			department.setD_id((Integer)object[0]);
+			department.setName(object[0].toString());
+			department.setDescription(object[1].toString());
+			department.setManager(object[2].toString());
+		}
+		return department;
 	}
 	
 	

@@ -3,7 +3,16 @@ package entity;
 import com.google.gson.annotations.Expose;
 
 public class Employee {
-	 @Expose
+	 @Override
+	public String toString() {
+		return "Employee [e_id=" + e_id + ", name=" + name + ", age=" + age
+				+ ", sex=" + sex + ", marry=" + marry + ", idCard=" + idCard
+				+ ", edu=" + edu + ", school=" + school + ", mobile=" + mobile
+				+ ", address=" + address + ", email=" + email + ", department="
+				+ department + ", salary=" + salary + "]";
+	}
+
+	@Expose
 	private Integer e_id;
 	 @Expose
 	private String name;
