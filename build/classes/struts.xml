@@ -32,5 +32,8 @@
 		<action name="department_*" class="departmentAction" method="{1}">
 			<result name="success">/index.jsp</result>
 		</action>
+		<action name="recruit_*" class="recruitAction" method="{1}">
+			<result name="success">/index.jsp</result>
+		</action>
 	</package>
 	</struts>
