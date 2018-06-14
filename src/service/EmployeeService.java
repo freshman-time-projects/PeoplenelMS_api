@@ -4,7 +4,7 @@ import java.util.List;
 import entity.Employee;
 import entity.EmployeeAndDepartment;
 public interface EmployeeService {
-	public boolean saveEmployee(Employee employee,Integer value);
+	public boolean saveEmployee(Employee employee,String value);
 	public boolean deleteEmployee(Employee employee);
 	public boolean updateEmployee(Employee employee);
 	public List<Employee> getAllEmployee();

@@ -34,12 +34,12 @@ public class EmployeeAction extends ActionSupport {
 	public String add() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 //		String msg = JsonUtil.getStrResponse();// 获取前端信
-		String msg = "{'e_id':'2','name':'xiao','age':'33','sex':'男','marry':'未','idCard':'3333','edu':'333','school':'虞城高中','mobile':'333','address':'333','email':'222','d_id':'2'}";
+		String msg = "{'e_id':'2','name':'xiao','age':'33','sex':'男','marry':'未','idCard':'3333','edu':'333','school':'虞城高中','mobile':'333','address':'333','email':'222','department':'3'}";
 		if (msg.length() != 0) {
 			JSONObject object = JSONObject.fromObject(msg);// 封装成Json对象
 			Employee employee = (Employee) object.toBean(object, Employee.class);// 转成bean对象
 			System.out.println();
-			if (employeeService.saveEmployee(employee,Integer.parseInt(object.get("d_id").toString())))
+			if (employeeService.saveEmployee(employee,object.get("department").toString()))
 				OutContent.successCotent(map,"保存成功!");
 			 else 
 				OutContent.failCotent(map,"保存失败!");
@@ -111,8 +111,8 @@ public class EmployeeAction extends ActionSupport {
 		}
 		return null;
 	}
-/*/没有测试一点
-	public String getPart() throws Exception {
+/*/
+	public String search() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String msg = JsonUtil.getStrResponse();// 获取前端信息
 		if (msg.length() != 0) {

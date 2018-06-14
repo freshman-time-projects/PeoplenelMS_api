@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import sql.GetSQLYuJu;
 import dao.UserDAO;
+import entity.Department;
 import entity.Recruit;
 import entity.User;
 
@@ -48,11 +49,14 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Override
 	public boolean deleteUser(User user) {
+		List<User>list = (List<User>) hibernateTemplate.find("from User where u_id = ?",user.getU_id());
 		try {
-			//妈的，既然是void类型
+			if(list.size()>0){
+				user = list.get(0);
 			hibernateTemplate.delete(user);
+			}
 			return true;
-		} catch (DataAccessException e) {
+		} catch (DataAccessException e){
 			e.printStackTrace();
 			return false;
 		}
@@ -60,7 +64,6 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public boolean UpdateUser(User user) {
 		try {
-			//妈的，既然是void类型
 			hibernateTemplate.update(user);
 			return true;
 		} catch (DataAccessException e) {

@@ -15,6 +15,7 @@ import customdefinited.ToVirtualEntity;
 import customdefinited.customdentity.CustomDepartment;
 import dao.DepartmentDAO;
 import entity.Department;
+import entity.Employee;
 
 public class DepartmentDAOImpl implements DepartmentDAO {
 	private SessionFactory sessionFactory;
@@ -63,17 +64,24 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 	@Override
 	public boolean UpdateDepartment(Department department) {
 		List<Department>list = (List<Department>) hibernateTemplate.find("from Department where d_id = ?",department.getD_id());
-	        try {
-				if(list.size()>0){
-					department = list.get(0);
-					hibernateTemplate.update(department);
-					return true;
-				}else{
-					return false;
-				}
+		if(list.size()!=0&&list!=null){
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		try {
+			Department  dep = session.get(Department.class,department.getD_id());
+			System.out.println(dep+"66666666666666666666666666666");
+			dep.setName(department.getName());
+			dep.setDescription(department.getDescription());
+			dep.setManager(department.getManager());
+			session.update(dep);
+			transaction.commit();
+			session.close();
+			return true;
 			} catch (DataAccessException e) {
 				return false;
 			}
+		}
+		return false;
 	}
 	@Override
 	public List<Department> getAllDepartment() {

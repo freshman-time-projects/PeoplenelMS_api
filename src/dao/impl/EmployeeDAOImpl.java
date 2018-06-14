@@ -35,20 +35,26 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 		this.hibernateTemplate = hibernateTemplate;
 	}
 ///》》》》》》chenggong
-	public boolean saveEmployee(Employee employee,Integer value) {
+	public boolean saveEmployee(Employee employee,String value) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		Query query= session.createSQLQuery(GetSQLYuJu.EMPLOYEE_GET_DEPARTMENT);
-		query.setInteger(0,value);
-		transaction.commit();
-		List<Object[]> list = query.list();
-		employee.setDepartment(ToVirtualEntity.getDepartment(list));
-		System.out.println(employee);
-		if(session.save(employee)!=null){
+		try {
+			Query query= session.createSQLQuery(GetSQLYuJu.EMPLOYEE_GET_DEPARTMENT);
+			query.setString(0,value);
+			transaction.commit();
+			List<Object[]> list = query.list();
+			if(list.size()==0){
+				session.close();
+				return false;
+			}
+		    employee.setDepartment(ToVirtualEntity.getDepartment(list));
+			if(session.save(employee)!=null){
+				session.close();
+				return true;
+			}
+		} catch (Exception e) {
 			session.close();
-			return true;
 		}
-		session.close();
 		return false;
 	}
     //》》》》》删除成功
@@ -109,7 +115,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Query query= session.createSQLQuery(GetSQLYuJu.EMPLOYEE_GET_PART);
-		query.setString(0,datas[0]);
+		query.setString(0,"%"+datas[0]+"%");
 		query.setString(1,datas[1]);
 		transaction.commit();
 		List<Object[]> list = query.list();

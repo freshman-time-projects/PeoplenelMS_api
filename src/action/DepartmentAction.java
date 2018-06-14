@@ -84,7 +84,7 @@ public class DepartmentAction extends ActionSupport {
 	public String update() throws Exception {
 		PrintWriter out = JsonUtil.getHeader();
 		/* String msg = JsonUtil.getStrResponse(); */
-		String msg = "{'d_id':1,'name':'3','description':'34','manager':'2222'}";
+		String msg = "{'d_id':3,'name':'3','description':'35555554','manager':'2222'}";
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (msg != null && msg.length() != 0) {
 			JSONObject object = JSONObject.fromObject(msg);

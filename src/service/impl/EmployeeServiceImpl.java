@@ -18,7 +18,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		this.employeeDAO = employeeDAO;
 	}
 	@Override
-	public boolean saveEmployee(Employee employee,Integer value) {
+	public boolean saveEmployee(Employee employee,String value) {
 		return employeeDAO.saveEmployee(employee,value)?true:false;
 	}
 	@Override
