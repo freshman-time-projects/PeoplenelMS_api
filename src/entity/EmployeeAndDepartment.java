@@ -20,7 +20,7 @@ public class EmployeeAndDepartment {
 	 @Expose
 	private String school;
 	 @Expose
-	private Integer mobile;
+	private String mobile;
 	 @Expose
 	private String address;
 	 @Expose
@@ -82,10 +82,10 @@ public class EmployeeAndDepartment {
 	public void setSchool(String school) {
 		this.school = school;
 	}
-	public Integer getMobile() {
+	public String getMobile() {
 		return mobile;
 	}
-	public void setMobile(Integer mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 	public String getAddress() {
@@ -94,6 +94,10 @@ public class EmployeeAndDepartment {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+<<<<<<< HEAD
+=======
+	
+>>>>>>> b1504a1bcc71805a0eb62a0bdcd2f4a4ca09c558
 	public String getEmail() {
 		return email;
 	}

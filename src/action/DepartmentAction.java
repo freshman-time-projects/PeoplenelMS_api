@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
-import service.DepartmentService;   
+import service.DepartmentService;
 import util.GetRequestorResponse;
 import util.JsonUtil;
 import util.OutContent;
@@ -31,6 +31,7 @@ public class DepartmentAction extends ActionSupport {
 	public void setDepartmentService(DepartmentService departmentService) {
 		this.departmentService = departmentService;
 	}
+
 	// 成功
 	public String add() throws Exception {
 		HttpSession session = GetRequestorResponse.getSession();
@@ -41,33 +42,46 @@ public class DepartmentAction extends ActionSupport {
 		try {
 			// 处理跨域
 			String jsoon = JsonUtil.getStrResponse();
+<<<<<<< HEAD
 			 JSONObject jsonObject = JSONObject.fromObject(jsoon);
 			 Department department = (Department)JSONObject.toBean(jsonObject,
 					Department.class);
 			 System.out.println(department.toString()+"*************************************");
+=======
+			/*
+			 * String jsoon = "{'name':'12','description':'45',}";//**************
+			 */
+			JSONObject jsonObject = JSONObject.fromObject(jsoon);
+			Department department = (Department) JSONObject.toBean(jsonObject, Department.class);
+>>>>>>> b1504a1bcc71805a0eb62a0bdcd2f4a4ca09c558
 			if (departmentService.saveDepartment(department)) {
-				OutContent.successCotent(map,"保存成功!");
+				OutContent.successCotent(map, "保存成功!");
 			} else {
-				OutContent.failCotent(map,"保存失败!");
+				OutContent.failCotent(map, "保存失败!");
 			}
+<<<<<<< HEAD
 			/*String data = gson.toJson(map);
 			 JSONObject json = JSONObject.fromObject(map); 
 			out.print(data);*/
+=======
+			/* JSONObject json = JSONObject.fromObject(map); */
+>>>>>>> b1504a1bcc71805a0eb62a0bdcd2f4a4ca09c558
 		} catch (Exception e) {
-			OutContent.failCotent(map,"保存失败!");
+			OutContent.failCotent(map, "保存失败!");
 		}
 		return null;
 	}
-//成功"{'d_id':1,'name':'3','description':'34','manager':'2222'}"; 
+
+	// 成功"{'d_id':1,'name':'3','description':'34','manager':'2222'}";
 	public String romove() throws Exception {
 		PrintWriter out = JsonUtil.getHeader();
-		String msg =JsonUtil.getStrResponse();
+		String msg = JsonUtil.getStrResponse();
+		System.out.println("msss"+msg);
 		Map<String, Object> map = new HashMap<String, Object>();
 		JSONObject json = JSONObject.fromObject(msg);
-		Department department = (Department) json
-				.toBean(json, Department.class);
+		Department department = (Department) json.toBean(json, Department.class);
 		if (departmentService.deleteDepartment(department)) {
-			OutContent.successCotent(map,"删除成功!");
+			OutContent.successCotent(map, "删除成功!");
 		} else {
 			map.put("code", 3);
 			map.put("msg", "删除失败");
@@ -84,13 +98,12 @@ public class DepartmentAction extends ActionSupport {
 		if (msg != null && msg.length() != 0) {
 			JSONObject object = JSONObject.fromObject(msg);
 			System.out.println("5555555" + object);
-			Department department = (Department) object.toBean(object,
-					Department.class);
+			Department department = (Department) object.toBean(object, Department.class);
 			System.out.println("sss");
 			if (departmentService.updateDepartment(department)) {
-				OutContent.successCotent(map,"更新成功!");
+				OutContent.successCotent(map, "更新成功!");
 			} else {
-				OutContent.failCotent(map,"更新失败!");
+				OutContent.failCotent(map, "更新失败!");
 			}
 		}
 		return null;
@@ -98,20 +111,19 @@ public class DepartmentAction extends ActionSupport {
 
 	// /成功
 	public String getAll() throws Exception {
-		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
-				.create();
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		List<Department> list = departmentService.getAllDepartment();
 		OutContent.content(list);
 		return null;
 	}
 
 	public String getOne() {
-        //查询单个部门时（用作更新信息）前提给一个对象
-		
+		// 查询单个部门时（用作更新信息）前提给一个对象
+
 		return null;
 	}
 
-	//成功
+	// 成功
 	public String getPart() throws Exception {
 		// 模糊查询部门时，必须得给个部门名字
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -125,7 +137,7 @@ public class DepartmentAction extends ActionSupport {
 				OutContent.content(list);
 			}
 		} catch (Exception e) {
-			OutContent.failCotent(map,"查找失败");
+			OutContent.failCotent(map, "查找失败");
 		}
 		return null;
 	}

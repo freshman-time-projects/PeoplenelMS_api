@@ -22,7 +22,7 @@ public class ToVirtualEntity {
 			employeeAndDepartment.setIdCard((String) (object[5]));
 			employeeAndDepartment.setEdu((String) (object[6]));
 			employeeAndDepartment.setSchool((String) (object[7]));
-			employeeAndDepartment.setMobile((Integer) (object[8]));
+			employeeAndDepartment.setMobile((String) (object[8]));
 			employeeAndDepartment.setAddress((String) (object[9]));
 			employeeAndDepartment.setEmail((String) (object[10]));
 			employeeAndDepartment.setDepartment((String) (object[11]));
