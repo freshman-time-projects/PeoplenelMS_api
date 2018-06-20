@@ -4,8 +4,8 @@ import java.util.List;
 
 import service.EmployeeService;
 import dao.EmployeeDAO;
-import dao.UserDAO;
 import entity.Employee;
+import entity.EmployeeAndDepartment;
 
 public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeDAO employeeDAO;
@@ -17,39 +17,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 		this.employeeDAO = employeeDAO;
 	}
 	@Override
-	public Integer saveEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean saveEmployee(Employee employee,String value) {
+		return employeeDAO.saveEmployee(employee,value)?true:false;
 	}
 	@Override
-	public Integer deleteEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean deleteEmployee(Employee employee) {
+		return employeeDAO.deleteEmployee(employee)?true:false;
 	}
-
 	@Override
-	public Integer updateEmployee(Employee employee) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean updateEmployee(Employee employee) {
+		return employeeDAO.UpdateEmployee(employee)?true:false;
 	}
-
 	@Override
 	public List<Employee> getAllEmployee() {
-
-		
-		return  employeeDAO.getAllEmployee();
+		return  employeeDAO.getAllEmployee()==null?null:employeeDAO.getAllEmployee();
 	}
-
 	@Override
-	public List<Employee> getPartEmployee() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<EmployeeAndDepartment> getPartEmployee(String[] datas) {
+		return employeeDAO.getPartEmployee(datas)==null?null:employeeDAO.getPartEmployee(datas);
 	}
-
 	@Override
-	public Employee getEmployee() {
-		// TODO Auto-generated method stub
-		return null;
+	public EmployeeAndDepartment getEmployee(Employee employee) {
+		return employeeDAO.getEmployee(employee)==null?null:employeeDAO.getEmployee(employee);
 	}
 
 }

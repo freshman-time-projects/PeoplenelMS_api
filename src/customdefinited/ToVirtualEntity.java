@@ -5,13 +5,15 @@ import java.util.List;
 
 import customdefinited.customdentity.CustomDepartment;
 import entity.Department;
+import entity.Employee;
 import entity.EmployeeAndDepartment;
 import entity.User;
 
-public class EDObjetPackage {
+public class ToVirtualEntity {
 	public static List<EmployeeAndDepartment> getEDList(List<Object[]> list) {
 		List<EmployeeAndDepartment> EDlist = new ArrayList<EmployeeAndDepartment>();
 		for (Object[] object : list) {
+			System.out.println(object.length+"88888888888888888888888888888888888888888888888888888++++++++");
 			EmployeeAndDepartment employeeAndDepartment = new EmployeeAndDepartment();
 			employeeAndDepartment.setE_id((Integer) (object[0]));
 			employeeAndDepartment.setName((String) (object[1]));
@@ -25,6 +27,7 @@ public class EDObjetPackage {
 			employeeAndDepartment.setAddress((String) (object[9]));
 			employeeAndDepartment.setEmail((String) (object[10]));
 			employeeAndDepartment.setDepartment((String) (object[11]));
+			employeeAndDepartment.setD_id((Integer)(object[12]));
 			EDlist.add(employeeAndDepartment);
 		}
 		return EDlist;
@@ -52,7 +55,7 @@ public class EDObjetPackage {
 			customDepartment.setDescription(((String) object[2]));
 			customDepartment.setManager((String) object[3]);
 			System.out.println("8888888888"+object[4].toString().getClass());
-			customDepartment.setSumpeople((String) object[4].toString());
+			customDepartment.setSumpeople(object[4].toString());
 			CDlist.add(customDepartment);
 		}
 		for (Object[] object : list2) {
@@ -80,6 +83,34 @@ public class EDObjetPackage {
 			userList.add(user);
 		}
 		return userList;
+	}
+/*	public static List<Recruit> getRecruit(List<Object[]> list) {
+		List<User> recruitList = new ArrayList<User>();
+		for (Object[] object : list) {
+			Recruit recruit = new Recruit();
+			recruit.setUsername((String) object[1]);
+			recruitList.add(recruit);
+		}
+		return userList;
+	}*/
+	
+	public static Department getDepartment(List<Object[]> list) {
+		Department department = new Department();
+		for (Object[] object : list) {
+			department.setD_id((Integer)object[0]);
+			department.setName(object[0].toString());
+			department.setDescription(object[1].toString());
+			department.setManager(object[2].toString());
+		}
+		return department;
+	}
+	public static Employee getEmployee(List<Object[]> list) {
+		Employee employee = new Employee();
+		for (Object[] object : list) {
+			employee.setE_id((Integer)object[0]);
+			employee.setName(object[1].toString());
+		}
+		return employee;
 	}
 	
 	

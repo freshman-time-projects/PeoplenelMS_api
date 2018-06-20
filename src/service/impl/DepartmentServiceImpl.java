@@ -16,6 +16,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		this.departmentDAO = departmentDAO;
 	}
 
+	@Override
 	public boolean saveDepartment(Department department) {
 		return departmentDAO.saveDepartment(department)?true:false;
 	}
@@ -48,6 +49,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 	
 	
+	@Override
 	public List<CustomDepartment>  getSum(){
 		return departmentDAO.getSum()==null?null:departmentDAO.getSum();
 	}

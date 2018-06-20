@@ -1,17 +1,22 @@
 package dao.impl;
+
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.junit.Test;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
+import customdefinited.ToVirtualEntity;
 import dao.SalaryDAO;
 import entity.Salary;
-public class SalaryDAOImpl implements SalaryDAO{
+import sql.GetSQLYuJu;
+
+public class SalaryDAOImpl implements SalaryDAO {
 	private SessionFactory sessionFactory;
 	private HibernateTemplate hibernateTemplate;
+
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
@@ -28,10 +33,35 @@ public class SalaryDAOImpl implements SalaryDAO{
 		this.hibernateTemplate = hibernateTemplate;
 	}
 
-	public void saveSalary(Salary salary) {
-		
+	@Override
+	public boolean saveSalary(Salary salary,String e_id) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		try {
+
+			System.out.println("%^^^"+1);
+			Query query = session.createSQLQuery(GetSQLYuJu.SALARY_GET_EMPLOYEE);
+			query.setString(0, e_id);
+			transaction.commit();
+			List<Object[]> list = query.list();
+			System.out.println("%^^^"+list);
+			if (list.size() == 0) {
+				session.close();
+				return false;
+			}
+			salary.setEmployee(ToVirtualEntity.getEmployee(list));
+			if (session.save(salary) != null) {
+				session.close();
+				return true;
+			}
+		} catch (Exception e) {
+			session.close();
+		}
+		return false;
 	}
 
+
+	@Override
 	public Integer deleteSalary(Salary salary) {
 		// TODO Auto-generated method stub
 		return null;
@@ -54,15 +84,13 @@ public class SalaryDAOImpl implements SalaryDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-		Session session = sessionFactory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		/*return null;*/
+	/* return null; */
+	@Override
 	public Salary getSalary() {
 		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
-		System.out.println("4445454"+session);
+		System.out.println("4445454" + session);
 		return null;
 	}
-	
+
 }

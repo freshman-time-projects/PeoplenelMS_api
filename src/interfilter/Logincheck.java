@@ -15,6 +15,7 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 
 public class Logincheck extends MethodFilterInterceptor{
+	@Override
 	protected String doIntercept(ActionInvocation invoke) throws Exception{
     HttpSession session =  ServletActionContext.getRequest().getSession();
     HttpServletResponse response = ServletActionContext.getResponse();

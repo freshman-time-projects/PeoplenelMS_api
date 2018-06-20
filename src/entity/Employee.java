@@ -3,7 +3,7 @@ package entity;
 import com.google.gson.annotations.Expose;
 
 public class Employee {
-	 @Expose
+	@Expose
 	private Integer e_id;
 	 @Expose
 	private String name;

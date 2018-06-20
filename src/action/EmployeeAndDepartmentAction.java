@@ -6,10 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import service.EmployeeAndDepartmentService;
 import sql.GetSQLYuJu;
@@ -58,7 +54,6 @@ public void setEmployeeAndDepartmentService(
 			out.print(msg);
 			out.close();
 		  } catch (IOException e) {
-			
 			e.printStackTrace();
 		}
 		return null;

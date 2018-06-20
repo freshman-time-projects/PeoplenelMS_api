@@ -7,6 +7,8 @@ private String sex;
 private String school;
 private String filepath;
 private Integer state;
+private String email;
+
 public Integer getR_id() {
 	return r_id;
 }
@@ -43,4 +45,11 @@ public Integer getState() {
 public void setState(Integer state) {
 	this.state = state;
 }
+public String getEmail() {
+	return email;
+}
+public void setEmail(String email) {
+	this.email = email;
+}
+
 }

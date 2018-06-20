@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -18,11 +20,12 @@
 		<property name="url"> <value>jdbc:mysql://127.0.0.1:3306/test</value> </property> 
 		<property name="username"> <value>root</value> </property> <property name="password"> 
 		<value>123456</value> </property> </bean> -->
-
 	<!-- 配置数据源 -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test"></property>
+		<property name="jdbcUrl"
+			value="jdbc:mysql://localhost:3306/test"></property>
 		<property name="user" value="root"></property>
 		<property name="password" value="sa0230"></property>
 	</bean>
@@ -35,7 +38,7 @@
 		<!-- 配置hibernate信息 -->
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -56,7 +59,8 @@
 		</property>
 	</bean>
 	<!-- 配置hibernateTemplate -->
-	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate5.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<!-- 配置事务管理器 -->
@@ -65,12 +69,15 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<!-- 配置通知 通知事务管理要管理的事务方法 -->
-	<!-- <tx:annotation-driven transaction-manager="transactionManager"/>  -->
-	
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
+
+	<tx:advice id="txAdvice"
+		transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="*" propagation="REQUIRED" read-only="false" />
-			<tx:method name="find*" propagation="SUPPORTS" read-only="false" />
+			<tx:method name="*" propagation="REQUIRED"
+				read-only="false" />
+			<tx:method name="find*" propagation="SUPPORTS"
+				read-only="false" />
 		</tx:attributes>
 	</tx:advice>
 	<!-- 配置切入点 执行*.impl下的所有类中 的所有方法 -->
@@ -81,7 +88,7 @@
 			id="pt1" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pt1" />
 	</aop:config>
-	<!-- ***********************************0dao的bean类型 ***************************************-->
+	<!-- ***********************************0dao的bean类型 *************************************** -->
 	<bean id="userDaoImpl" class="dao.impl.UserDAOImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 		<property name="sessionFactory" ref="sessionFactory"></property>
@@ -90,7 +97,8 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	<bean id="employeeAndDepartmentDAOImpl" class="dao.impl.EmployeeAndDepartmentDAOImpl">
+	<bean id="employeeAndDepartmentDAOImpl"
+		class="dao.impl.EmployeeAndDepartmentDAOImpl">
 		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
@@ -105,36 +113,62 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	<bean id="salaryDAOImpl" class="dao.impl.SalaryDAOImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 	<!-- *************************************services的实体类bean******************************** -->
 	<bean id="userServiceImpl" class="service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDaoImpl"></property>
 	</bean>
-	<bean id="employeeServiceImpl" class="service.impl.EmployeeServiceImpl">
+	<bean id="employeeServiceImpl"
+		class="service.impl.EmployeeServiceImpl">
 		<property name="employeeDAO" ref="employeeDaoImpl"></property>
 	</bean>
-	<bean id="employeeAndDepartmentServiceImpl" class="service.impl.EmployeeAndDepartmentServiceImpl">
-		<property name="employeeAndDepartmentDAO" ref="employeeAndDepartmentDAOImpl"></property>
+	<bean id="employeeAndDepartmentServiceImpl"
+		class="service.impl.EmployeeAndDepartmentServiceImpl">
+		<property name="employeeAndDepartmentDAO"
+			ref="employeeAndDepartmentDAOImpl"></property>
 	</bean>
-	<bean id="recruitServiceImpl" class="service.impl.RecruitServiceImpl">
+	<bean id="recruitServiceImpl"
+		class="service.impl.RecruitServiceImpl">
 		<property name="recruitDAO" ref="recruitDAOImpl"></property>
+		<property name="userDAO" ref="userDaoImpl"></property>
 	</bean>
-	<bean id="departmentServiceImpl" class="service.impl.DepartmentServiceImpl">
+	<bean id="departmentServiceImpl"
+		class="service.impl.DepartmentServiceImpl">
 		<property name="departmentDAO" ref="departmentDAOImpl"></property>
+	</bean>
+	<bean id="salaryServiceImpl"
+		class="service.impl.SalaryServiceImpl">
+		<property name="salaryDAO" ref="salaryDAOImpl"></property>
 	</bean>
 	<!-- *********************************action的实体类bean**************************************** -->
 	<bean id="userAction" class="action.UserAction">
 		<property name="userService" ref="userServiceImpl" />
+		<property name="employeeService" ref="employeeServiceImpl" />
 	</bean>
 	<bean id="employeeAction" class="action.EmployeeAction">
 		<property name="employeeService" ref="employeeServiceImpl" />
+		<property name="salaryService" ref="salaryServiceImpl" />
+		<property name="departmentService" ref="departmentServiceImpl" />
+		<property name="recruitService" ref="recruitServiceImpl" />
+		
 	</bean>
-	<bean id="employeeAndDepartmentAction" class="action.EmployeeAndDepartmentAction">
-		<property name="employeeAndDepartmentService" ref="employeeAndDepartmentServiceImpl" />
+	<bean id="employeeAndDepartmentAction"
+		class="action.EmployeeAndDepartmentAction">
+		<property name="employeeAndDepartmentService"
+			ref="employeeAndDepartmentServiceImpl" />
 	</bean>
 	<bean id="recruitAction" class="action.RecruitAction">
 		<property name="recruitService" ref="recruitServiceImpl" />
+		<property name="userService" ref="userServiceImpl" />
 	</bean>
 	<bean id="departmentAction" class="action.DepartmentAction">
-		<property name="departmentService" ref="departmentServiceImpl" />
+		<property name="departmentService"
+			ref="departmentServiceImpl" />
+	</bean>
+	<bean id="salaryAction" class="action.SalaryAction">
+		<property name="salaryService" ref="salaryServiceImpl" />
 	</bean>
 </beans>

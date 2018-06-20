@@ -12,5 +12,6 @@
     <property name="sex" column="sex" type="java.lang.String"></property>
     <property name="filepath" column="filepath" type="java.lang.String"></property>
     <property name="state" column="state" type="java.lang.Integer"></property>
+    <property name="email" column="email" type="java.lang.String"></property>
     </class>
     </hibernate-mapping>

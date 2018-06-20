@@ -12,4 +12,6 @@ public boolean updateUser(User user);
 public List<User> getAllUser();
 public List<User> getPartUser(String string);
 public User getUser(User user);
+public User active(String code);
+public User pass(String email,String name);
 }

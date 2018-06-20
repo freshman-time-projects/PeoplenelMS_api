@@ -2,14 +2,24 @@ package service.impl;
 
 import java.util.List;
 
+import dao.SalaryDAO;
 import entity.Salary;
 import service.SalaryService;
 
 public class SalaryServiceImpl implements SalaryService{
+	private SalaryDAO salaryDAO;
+	
+	public SalaryDAO getSalaryDAO() {
+		return salaryDAO;
+	}
 
-	public Integer saveSalary(Salary salary) {
+	public void setSalaryDAO(SalaryDAO salaryDAO) {
+		this.salaryDAO = salaryDAO;
+	}
 
-		return null;
+	@Override
+	public boolean saveSalary(Salary salary,String e_id) {
+		return salaryDAO.saveSalary(salary,e_id);
 	}
 
 	@Override

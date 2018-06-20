@@ -1,27 +1,23 @@
 package action;
 
-import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import com.google.gson.JsonObject;
+import com.opensymphony.xwork2.ActionSupport;
 
+import customdefinited.customdentity.CustomDepartment;
+import entity.Department;
 import net.sf.json.JSONObject;
 import service.DepartmentService;
-import util.GetRequestorResponse;
 import util.JsonUtil;
 import util.OutContent;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.opensymphony.xwork2.ActionSupport;
-
-import entity.Department;
-
 public class DepartmentAction extends ActionSupport {
+	Map<String, Object> res = new HashMap<String, Object>();
 	private DepartmentService departmentService;
 
 	public DepartmentService getDepartmentService() {
@@ -34,44 +30,31 @@ public class DepartmentAction extends ActionSupport {
 
 	// 成功
 	public String add() throws Exception {
-		HttpSession session = GetRequestorResponse.getSession();
-		HttpServletRequest request = GetRequestorResponse.getRequest();
-		Gson gson = new Gson();
-		PrintWriter out = JsonUtil.getHeader();
-		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			// 处理跨域
 			String jsoon = JsonUtil.getStrResponse();
-			/*
-			 * String jsoon = "{'name':'12','description':'45',}";//**************
-			 */
 			JSONObject jsonObject = JSONObject.fromObject(jsoon);
 			Department department = (Department) JSONObject.toBean(jsonObject, Department.class);
 			if (departmentService.saveDepartment(department)) {
-				OutContent.successCotent(map, "保存成功!");
+				OutContent.successCotent(res, "保存成功!");
 			} else {
-				OutContent.failCotent(map, "保存失败!");
+				OutContent.failCotent(res, "保存失败!");
 			}
 			/* JSONObject json = JSONObject.fromObject(map); */
 		} catch (Exception e) {
-			OutContent.failCotent(map, "保存失败!");
+			OutContent.failCotent(res, "保存失败!");
 		}
 		return null;
 	}
 
-	// 成功"{'d_id':1,'name':'3','description':'34','manager':'2222'}";
 	public String romove() throws Exception {
-		PrintWriter out = JsonUtil.getHeader();
 		String msg = JsonUtil.getStrResponse();
-		System.out.println("msss"+msg);
-		Map<String, Object> map = new HashMap<String, Object>();
 		JSONObject json = JSONObject.fromObject(msg);
-		Department department = (Department) json.toBean(json, Department.class);
+		Department department = (Department) JSONObject.toBean(json, Department.class);
 		if (departmentService.deleteDepartment(department)) {
-			OutContent.successCotent(map, "删除成功!");
+			OutContent.successCotent(res, "删除成功!");
 		} else {
-			map.put("code", 3);
-			map.put("msg", "删除失败");
+			OutContent.successCotent(res, "删除失败!");
 		}
 		return null;
 	}
@@ -80,12 +63,12 @@ public class DepartmentAction extends ActionSupport {
 	public String update() throws Exception {
 		PrintWriter out = JsonUtil.getHeader();
 		/* String msg = JsonUtil.getStrResponse(); */
-		String msg = "{'d_id':1,'name':'3','description':'34','manager':'2222'}";
+		String msg = "{'d_id':3,'name':'3','description':'35555554','manager':'2222'}";
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (msg != null && msg.length() != 0) {
 			JSONObject object = JSONObject.fromObject(msg);
 			System.out.println("5555555" + object);
-			Department department = (Department) object.toBean(object, Department.class);
+			Department department = (Department) JSONObject.toBean(object, Department.class);
 			System.out.println("sss");
 			if (departmentService.updateDepartment(department)) {
 				OutContent.successCotent(map, "更新成功!");
@@ -98,9 +81,28 @@ public class DepartmentAction extends ActionSupport {
 
 	// /成功
 	public String getAll() throws Exception {
-		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		List<Department> list = departmentService.getAllDepartment();
 		OutContent.content(list);
+		return null;
+	}
+
+	public String getNames() throws Exception {
+		List<CustomDepartment> cus = departmentService.getSum();
+		List<Department> list = departmentService.getAllDepartment();
+		List<String> names = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		Map<String,Object> map = new HashMap<String,Object>();
+		for(CustomDepartment c:cus) {
+			names.add(c.getName());
+			res.put(c.getName(), Integer.parseInt(c.getSumpeople()));
+		}
+		map.put("names", names);
+		Map<String,Object> li = new HashMap<String,Object>();
+		li.put("res",res);
+		li.put("col",map);
+//		JSONObject message = JSONObject.fromObject(res);
+//		JsonUtil.getHeader().print(message);
+		OutContent.container(li);
 		return null;
 	}
 
@@ -135,4 +137,8 @@ public class DepartmentAction extends ActionSupport {
 		return null;
 	}
 
+	// 部门删除的判断
+	public String verify() {
+		return null;
+	}
 }

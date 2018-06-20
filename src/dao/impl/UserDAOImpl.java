@@ -2,12 +2,7 @@ package dao.impl;
 
 import java.util.List;
 
-import javax.transaction.TransactionManager;
-
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
@@ -34,27 +29,41 @@ public class UserDAOImpl implements UserDAO {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
+
 	@Override
 	public boolean saveUser(User user) {
-		if (hibernateTemplate.save(user) != null)
+		if (!hibernateTemplate
+				.find("from entity.User u where u.username =? or u.email=?", user.getUsername(), user.getEmail())
+				.isEmpty()) {
+			System.out.println("已存在");
+			return false;
+		} else {
+			System.out.println("不存在");
+			user.setRole("1");
+			user.setState("0");
+			hibernateTemplate.save(user);
 			return true;
-		return false;
+		}
 	}
+
 	@Override
 	public boolean deleteUser(User user) {
+		List<User> list = (List<User>) hibernateTemplate.find("from User where u_id = ?", user.getU_id());
 		try {
-			//妈的，既然是void类型
-			hibernateTemplate.delete(user);
+			if (list.size() > 0) {
+				user = list.get(0);
+				hibernateTemplate.delete(user);
+			}
 			return true;
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
+
 	@Override
 	public boolean UpdateUser(User user) {
 		try {
-			//妈的，既然是void类型
 			hibernateTemplate.update(user);
 			return true;
 		} catch (DataAccessException e) {
@@ -62,6 +71,7 @@ public class UserDAOImpl implements UserDAO {
 			return false;
 		}
 	}
+
 	@Override
 	public List<User> getAllUser() {
 		String sql = "from User";
@@ -72,14 +82,36 @@ public class UserDAOImpl implements UserDAO {
 		// TODO Auto-generated method stub
 
 	}
-	@Override   
+
+	@Override
 	public List<User> getPartUser(String data) {
-		return (List<User>)hibernateTemplate.find(GetSQLYuJu.GETPART,"%"+data+"%");
+		return (List<User>) hibernateTemplate.find(GetSQLYuJu.GETPART, "%" + data + "%");
 	}
+
 	@Override
 	public User getUser(User user) {
-		if( hibernateTemplate.find(GetSQLYuJu.LOGINCHECK,new String[] { user.getUsername(), user.getPassword() }).size()==0)
+		if (hibernateTemplate.find(GetSQLYuJu.LOGINCHECK,
+				new String[] { user.getUsername(), user.getEmail(), user.getPassword() }).size() == 0)
 			return null;
-		return (User) hibernateTemplate.find(GetSQLYuJu.LOGINCHECK,new String[] { user.getUsername(), user.getPassword() }).get(0);
+		return (User) hibernateTemplate.find(GetSQLYuJu.LOGINCHECK,
+				new String[] { user.getUsername(), user.getEmail(), user.getPassword() }).get(0);
+	}
+
+	@Override
+	public User getUserByCode(String code) {
+		return (User) hibernateTemplate.find(GetSQLYuJu.USER_FIND_BYNAME, code).get(0);
+	}
+
+	@Override
+	public User pass(String email, String name) {
+		// Session session = sessionFactory.openSession();
+		// Transaction transaction = session.beginTransaction();
+		// Query query = session.createSQLQuery(GetSQLYuJu.RECRUIT_PASS);
+		// query.setString(0, email);
+		// System.out.println("11111"+" "+email);
+		// List<User> list = (List<User>)query.list();
+		// System.out.println("1111122"+list.size());
+		// transaction.commit();
+		return (User) hibernateTemplate.find(GetSQLYuJu.RECRUIT_PASS, name, email).get(0);
 	}
 }

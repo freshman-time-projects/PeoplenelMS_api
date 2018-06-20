@@ -5,12 +5,6 @@ import java.util.Set;
 import com.google.gson.annotations.Expose;
 
 public class Department {
-	 @Override
-	public String toString() {
-		return "Department [d_id=" + d_id + ", name=" + name + ", manager="
-				+ manager + ", description=" + description + ", manyEmployee="
-				+ manyEmployee + "]";
-	}
 	@Expose
 	private Integer d_id;
 	 @Expose
@@ -52,6 +46,12 @@ public class Department {
 	public void setManager(String manager) {
 		this.manager = manager;
 	}
+	@Override
+	public String toString() {
+		return "Department [d_id=" + d_id + ", name=" + name + ", manager=" + manager + ", description=" + description
+				+ ", manyEmployee=" + manyEmployee + "]";
+	}
+	
 
 	
 

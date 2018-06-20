@@ -11,4 +11,6 @@ public interface UserDAO {
 	public List<User> getAllUser();
 	public List<User> getPartUser(String data);
 	public User getUser(User user);
+	public User getUserByCode(String code);
+	public User pass(String email,String name);
 }

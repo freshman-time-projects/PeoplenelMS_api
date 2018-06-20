@@ -9,34 +9,50 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+import entity.Employee;
+import entity.User;
 import net.sf.json.JSONObject;
-
-import org.apache.struts2.ServletActionContext;
-
+import service.EmployeeService;
 import service.UserService;
 import sql.GetSQLYuJu;
 import util.GetRequestorResponse;
 import util.JsonUtil;
 import util.ObjectToJson;
+import util.OutContent;
 import util.SeparatePage;
-
-import com.google.gson.Gson;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
-
-import entity.User;
+import util.UUIDUtils;
 
 public class UserAction extends ActionSupport {
 	private UserService userService;
-	Map<String, Object> res = new HashMap<String, Object>();
+	private EmployeeService employeeService;
+	private Map<String, Object> res = new HashMap<String, Object>();
+	private String code; 
 	public UserService getUserService() {
 		return userService;
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
- ///测试成功
-	public String login() throws IOException {
+	
+ public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
+	public EmployeeService getEmployeeService() {
+		return employeeService;
+	}
+	public void setEmployeeService(EmployeeService employeeService) {
+		this.employeeService = employeeService;
+	}
+	///测试成功
+	public String login() throws Exception {
 		HttpSession session = GetRequestorResponse.getSession();
 		HttpServletRequest request = GetRequestorResponse.getRequest();
 		Gson gson = new Gson();
@@ -46,30 +62,39 @@ public class UserAction extends ActionSupport {
 			String jsoon = JsonUtil.getStrResponse();
 			JSONObject jsonObject = JSONObject.fromObject(jsoon);
 			User user = (User) JSONObject.toBean(jsonObject, User.class);
-		/*	User user = new User();
+			System.out.println("**&&"+user.toString());
+			/*	User user = new User();
 			user.setUsername("ee");
 			user.setPassword("ee");*/
 			// 判断是否登录，登录返回1，相反返回0
-			int flag = userService.login(user);
+			int flag = -1;
+			flag = userService.login(user);
 			// Gson 传输数据、
 			if (flag > 0&& request.getSession().getAttribute("username") != null) {
 				res.put("code", 2);
 				res.put("msg", "您已登录，请不要重复登录");
-				flag = -1;
+				flag = 0;
 			}
 			if (flag > 0) {
+				Employee employee = new Employee();
+				user = userService.getUser(user);
+				System.out.println("uuuuu"+user.toString()+"  "+user.getEmail());
+				employee.setEmail(user.getEmail());
+				System.out.println("qqqqq"+employee.getEmail());
+				
 				ActionContext.getContext().getSession().put("username", user.getUsername());
 					System.out.println("uuuus"+ActionContext.getContext().getSession().get("username"));
 					res.put("code", 0);
 				res.put("msg", "欢迎回来");
 				res.put("content",userService.getUser(user));
+				res.put("dataSource",employeeService.getEmployee(employee));
 			}
-			if (flag == 0) {
+			if (flag < 0) {
 				res.put("code", 1);
-				res.put("msg", "登录失败，用户名或密码错误");
+				res.put("msg", "登录失败，用户名或密码错误或您的账号未激活");
 			}
+			System.out.println("**&&"+flag);
 			String msg = gson.toJson(res);
-			System.out.println(msg);
 			out.print(msg);
 		} catch (Exception e) {
 			res.put("code", 6);
@@ -77,63 +102,91 @@ public class UserAction extends ActionSupport {
 			JSONObject msg = JSONObject.fromObject(res);
 			System.out.println(msg);
 			out.print(msg);
-		}
-		return null;
-	}
-
-	public String add() {
-		try {
-			String jsoon =JsonUtil.getStrResponse();
-			JSONObject jsonobject = JSONObject.fromObject(jsoon);
-			User user=  (User)JSONObject.toBean(jsonobject,User.class);
-			if(userService.saveUser(user))
-             ServletActionContext.getResponse().getWriter().print("{code:0}");//有疑问待商量	保存成功		
-			 ServletActionContext.getResponse().getWriter().print("{code:3}");//保存失败
-		} catch (Exception e) {
-			System.out.println("+++++++++++++++++出错++");
 			e.printStackTrace();
 		}
 		return null;
 	}
-
-	public String romove() {
+	public String active() throws Exception {
+		System.out.println("code"+code);
+		User user = userService.active(code);
+		if(user!=null) {
+			user.setState("1");
+			user.setCode("ACTIVED");
+			userService.updateUser(user);
+			OutContent.active(res, "激活成功，请登录！");
+		}
+		else
+			OutContent.failCotent(res, "您的激活码已经失效，请重新获取！");
+		return null;
+	}
+//成功
+	public String add() throws Exception {
+		PrintWriter out = JsonUtil.getHeader();
+		Gson gson = new Gson();
+		String jsoon = JsonUtil.getStrResponse();
+		JSONObject jsonobject = JSONObject.fromObject(jsoon);
+		String code = UUIDUtils.getUUID()+UUIDUtils.getUUID();
+		User user=  (User)JSONObject.toBean(jsonobject,User.class);
+		user.setCode(code);
+		if(userService.saveUser(user)){
+			res.put("code",0);
+			res.put("msg","注册成功，请去登录");
+		}
+		else{
+			res.put("code",3);
+			res.put("msg","该用户名或邮箱已经被注册了哦~");
+		}
+		String msg = gson.toJson(res);
+		out.print(msg);
+		return null;
+	}
+////成功
+	public String remove() throws Exception {
+		Map<String,Object>map = new HashMap<String,Object>();
 		try {
 			String jsoon = JsonUtil.getStrResponse();
+//			String jsoon = "{'u_id':8,'username':'dddd','password':'333','email':'eerrrf','role':'ddddd','code':'234d'}";
 			JSONObject jsonobject = JSONObject.fromObject(jsoon);
 			User user=  (User)JSONObject.toBean(jsonobject,User.class);
 			if(userService.deleteUser(user))
-             ServletActionContext.getResponse().getWriter().print("{code:0}");//有疑问待商量	保存成功		
-			 ServletActionContext.getResponse().getWriter().print("{code:3}");//保存失败
+				OutContent.successCotent(map,"更新成功");
+			else
+				OutContent.successCotent(map,"更新失败");
+				
+				
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
-	public String update() {
+////成功
+	public String update() throws Exception {
+		Map<String,Object>map = new HashMap<String,Object>();
 		try {
-			String jsoon = JsonUtil.getStrResponse();
+			/*String jsoon = JsonUtil.getStrResponse();*/
+			String jsoon = "{'u_id':8,'username':'dddd','password':'333','email':'eerrrf','role':'ddddd','code':'234d'}";
 			JSONObject jsonobject = JSONObject.fromObject(jsoon);
-			User user=  (User)JSONObject.toBean(jsonobject,User.class);
-			if(userService.updateUser(user))
-             ServletActionContext.getResponse().getWriter().print("{code:0}");//有疑问待商量	保存成功		
-			 ServletActionContext.getResponse().getWriter().print("{code:3}");//保存失败
+			User user = (User)JSONObject.toBean(jsonobject,User.class);
+			if(userService.updateUser(user)){
+				OutContent.successCotent(map,"更新成功");
+			}else{
+				OutContent.successCotent(map,"更新失败");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			OutContent.successCotent(map,"更新失败");
 		}
 		return null;
 	}
-
+//成功
 	public String getAll_page() throws IOException {
 		List<User> list = userService.getAllUser();
 		PrintWriter out = JsonUtil.getHeader();
-		Map<String,Object>map = new HashMap<>();
+		Map<String,Object>map = new HashMap<String, Object>();
 		if(list!=null&&list.size()!=0){
 		try {
-			/*返回employeelist数组   SeparatePage.separatePage(list.size(),"from User");*/
 			map.put("code",0);
 			map.put("content",SeparatePage.ueerSeparatePage(list.size(),GetSQLYuJu.USER_ALL_PAGE));
-			/*map.put("content",list);*/
 			Gson gson = new Gson();
 			JSONObject msg = JSONObject.fromObject(map);
 			out.println(msg);
@@ -170,10 +223,7 @@ public class UserAction extends ActionSupport {
 		}
 		return null;
 	}
-	public String separatePage(){
-		/*SeparatePage.separatePage(list.size());*/		
-		return null;
-	}
+//注销成功
 	public String logout() throws Exception{
 		System.out.println("5555555");
 		Gson gson = new Gson();

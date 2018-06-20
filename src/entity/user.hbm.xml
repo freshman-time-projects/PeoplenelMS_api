@@ -8,9 +8,11 @@
     <generator class="native"></generator>
     </id>
     <property name="username" column="username" type="java.lang.String"></property>
+    <property name="account" column="account" type="java.lang.String"></property>
     <property name="password" column="password" type="java.lang.String"></property>
     <property name="email" column="email" type="java.lang.String"></property>  
     <property name="role" column="role" type="java.lang.String"></property>
     <property name="code" column="code" type="java.lang.String"></property>
+    <property name="state" column="state" type="java.lang.String"></property>
     </class>
     </hibernate-mapping>

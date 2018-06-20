@@ -1,12 +1,21 @@
 package service;
+
 import java.util.List;
 
 import entity.Employee;
+import entity.EmployeeAndDepartment;
+
 public interface EmployeeService {
-	public Integer saveEmployee(Employee employee);
-	public Integer deleteEmployee(Employee employee);
-	public Integer updateEmployee(Employee employee);
+	public boolean saveEmployee(Employee employee, String value);
+
+	public boolean deleteEmployee(Employee employee);
+
+	public boolean updateEmployee(Employee employee);
+
 	public List<Employee> getAllEmployee();
-	public List<Employee> getPartEmployee();
-	public Employee getEmployee();
+
+	public List<EmployeeAndDepartment> getPartEmployee(String[] datas);
+
+	public EmployeeAndDepartment getEmployee(Employee employee);
+	
 }

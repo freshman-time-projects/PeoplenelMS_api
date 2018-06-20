@@ -15,6 +15,7 @@ public class EmployeeAndDepartmentServiceImpl implements EmployeeAndDepartmentSe
 			EmployeeAndDepartmentDAO employeeAndDepartmentDAO) {
 		this.employeeAndDepartmentDAO = employeeAndDepartmentDAO;
 	}
+	@Override
 	public List<EmployeeAndDepartment> getAllEmployeeAndDepartment() {
 		return employeeAndDepartmentDAO.getAllEmployeeAndDepartment();
 	}

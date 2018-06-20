@@ -2,7 +2,6 @@ package dao.impl;
 
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,7 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import sql.GetSQLYuJu;
-import customdefinited.EDObjetPackage;
+import customdefinited.ToVirtualEntity;
 import customdefinited.customdentity.CustomDepartment;
 import dao.DepartmentDAO;
 import entity.Department;
@@ -35,6 +34,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		this.hibernateTemplate = hibernateTemplate;
 	}
 
+	@Override
 	public boolean saveDepartment(Department department) {
 		if(hibernateTemplate.save(department)!=null)
 			return true;
@@ -42,6 +42,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 	}
 
 	@Override
+	//删除部门时，需要输入验证密码，当密码正确时删除部门**************-------**********
 	public boolean deleteDepartment(Department department) {
 		List<Department>list = (List<Department>) hibernateTemplate.find("from Department where d_id = ?",department.getD_id());
 		try {
@@ -62,17 +63,24 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 	@Override
 	public boolean UpdateDepartment(Department department) {
 		List<Department>list = (List<Department>) hibernateTemplate.find("from Department where d_id = ?",department.getD_id());
-	        try {
-				if(list.size()>0){
-					department = list.get(0);
-					hibernateTemplate.update(department);
-					return true;
-				}else{
-					return false;
-				}
+		if(list.size()!=0&&list!=null){
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		try {
+			Department  dep = session.get(Department.class,department.getD_id());
+			System.out.println(dep+"66666666666666666666666666666");
+			dep.setName(department.getName());
+			dep.setDescription(department.getDescription());
+			dep.setManager(department.getManager());
+			session.update(dep);
+			transaction.commit();
+			session.close();
+			return true;
 			} catch (DataAccessException e) {
 				return false;
 			}
+		}
+		return false;
 	}
 	@Override
 	public List<Department> getAllDepartment() {
@@ -82,9 +90,10 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		  List<Object[]>list = query.list();
 		  transaction.commit();
 		  session.close();
-		return list.size()==0||list==null?null:EDObjetPackage.getDList(list);
+		return list.size()==0||list==null?null:ToVirtualEntity.getDList(list);
 	}
   ///成功
+	@Override
 	public List<Department> getPartDepartment(String msg) {
 		List<Department> partList = (List<Department>)hibernateTemplate.find(GetSQLYuJu.DEPARTMENTPART,msg);
 		if(partList.size()==0||partList==null)
@@ -101,6 +110,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		return departmentList.get(0);
 	}
 
+	@Override
 	public List<CustomDepartment> getSum() {
       Session session = sessionFactory.openSession();
       Transaction transaction = session.beginTransaction();
@@ -111,6 +121,6 @@ public class DepartmentDAOImpl implements DepartmentDAO {
       if((list_in==null||list_in.size()==0)&&(list_not==null||list_not.size()==0))
     	  return null;
       System.out.println("ssssss");
-      return  EDObjetPackage.getCustomDepartment(list_in,list_not);
+      return  ToVirtualEntity.getCustomDepartment(list_in,list_not);
 	}
 }

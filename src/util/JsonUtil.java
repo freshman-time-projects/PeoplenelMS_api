@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.basic.BasicSliderUI.ActionScroller;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.StrutsStatics;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 public class JsonUtil extends ActionSupport{
@@ -17,7 +16,7 @@ public class JsonUtil extends ActionSupport{
 		//得到跨域
 		getHeader();
         ActionContext ctx = ActionContext.getContext();  
-        HttpServletRequest request = (HttpServletRequest)ctx.get(ServletActionContext.HTTP_REQUEST);   
+        HttpServletRequest request = (HttpServletRequest)ctx.get(StrutsStatics.HTTP_REQUEST);   
         InputStream inputStream;  
         String strResponse = "";  
         try {  

@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import customdefinited.EDObjetPackage;
+import customdefinited.ToVirtualEntity;
 import entity.EmployeeAndDepartment;
 import entity.User;
 
@@ -18,7 +18,7 @@ public class SeparatePage extends ActionSupport{
 		return sessionFactory;
 	}
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+		SeparatePage.sessionFactory = sessionFactory;
 	}
 	
 	public static List<EmployeeAndDepartment> separatePage(int totalCount,String sql){
@@ -43,7 +43,8 @@ public class SeparatePage extends ActionSupport{
 					.list();
 			transaction.commit();
 			session.close();
-			List<EmployeeAndDepartment> employeeList = EDObjetPackage.getEDList(list);
+			System.out.println(list.get(0).length+"55555555558888888888888888++++++++++++++++++++++++++++++++++666666666666666666666666");
+			List<EmployeeAndDepartment> employeeList = ToVirtualEntity.getEDList(list);
 			return employeeList;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,11 +73,42 @@ public class SeparatePage extends ActionSupport{
 					.list();
 			transaction.commit();
 			session.close();
-			List<User> userList = EDObjetPackage.getUser(list);
+			List<User> userList = ToVirtualEntity.getUser(list);
+			return userList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	/*public static List<Recruit> recruitSeparatePage(int totalCount,String sql){
+		try {
+//			JSONObject jsonObject = JsonReader.receivePost(GetRequestorResponse.getRequest());
+			Integer current = Integer.parseInt(GetRequestorResponse.getRequest().getParameter("current")==null?"1":GetRequestorResponse.getRequest().getParameter("current"));
+			Integer pageSize =  Integer.parseInt(GetRequestorResponse.getRequest().getParameter("size")==null?"10":GetRequestorResponse.getRequest().getParameter("size"));
+			if(current==0||current==null)
+				current=1;
+			if(pageSize==0||pageSize==null)
+				pageSize=10;
+			int maxValue=pageSize*current;
+			if(maxValue>totalCount){
+				maxValue=totalCount;
+			}
+			//sql分頁
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			List<Object[]> list = session.createSQLQuery(sql)
+					.setParameter(0,maxValue%pageSize==0?(maxValue-pageSize):(maxValue-maxValue%pageSize))
+					.setParameter(1,maxValue%pageSize==0?pageSize:(maxValue%pageSize))
+					.list();
+			transaction.commit();
+			session.close();
+			List<Recruit> recruitList = ToVirtualEntity.get
 			return userList;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+*/	
 }
