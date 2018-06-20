@@ -94,10 +94,6 @@ public class EmployeeAndDepartment {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> b1504a1bcc71805a0eb62a0bdcd2f4a4ca09c558
 	public String getEmail() {
 		return email;
 	}

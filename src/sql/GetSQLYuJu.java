@@ -19,5 +19,6 @@ public static final String EMPLOYEE_GET_PART ="select e.e_id,e.name,e.age,e.sex,
 public static final String EMPLOYEE_GET_DEPARTMENT = "select d.d_id,d.name,d.description,d.manager from department as d where d.name=?";
 //**********利用级联删除时,只需要删除员工即可,数据库会根据级联自动删除有关联的salary**********************/
 public static final String EMPLOYEE_DELETE_ONE ="from Employee as e where e.e_id=?";
-
+public static final String SALARY_SEARCH =  "select e.name,s.salary,s.bonus,s.e_id,d.name departmentname from (department as d inner join employee as e on d.d_id=e.d_id) inner join salary as s on s.e_id=e.e_id";
+public static final String SALARY_SEARCH_PAGE = "select e.name,s.salary,s.bonus,s.e_id,d.name departmentname from (department as d inner join employee as e on d.d_id=e.d_id) inner join salary as s on s.e_id=e.e_id limit ?,?";
 }

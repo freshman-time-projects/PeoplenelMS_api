@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import customdefinited.customdentity.CustomDepartment;
+import customdefinited.customdentity.EmployeeSalary;
 import entity.Department;
 import entity.EmployeeAndDepartment;
 import entity.User;
@@ -94,6 +95,21 @@ public class ToVirtualEntity {
 		}
 		return department;
 	}
+	//设置Object组合转换成EmployeeSalary类型
+	public static List<EmployeeSalary> getEmployeeSalary(List<Object[]> list) {
+		List<EmployeeSalary> mployeeSalary = new ArrayList<EmployeeSalary>();
+		for (Object[] object : list) {
+			EmployeeSalary employeeSalary = new EmployeeSalary();
+			employeeSalary.setUsername((String)object[0]);
+			employeeSalary.setSalary(((String) object[1]));
+			employeeSalary.setBonus((Double) object[2]);
+			employeeSalary.setE_id((Integer) object[3]);
+			employeeSalary.setDepartmentname((String)object[4]);
+			mployeeSalary.add(employeeSalary);
+		}
+		return mployeeSalary;
+	}
+	
 	
 	
 }

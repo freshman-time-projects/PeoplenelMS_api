@@ -105,7 +105,7 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	<bean id="SalaryDAOImpl" class="dao.impl.SalaryDAOImpl">
+	<bean id="salaryDAOImpl" class="dao.impl.SalaryDAOImpl">
 	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 	<property name="sessionFactory" ref="sessionFactory"></property>
  	</bean>
@@ -125,6 +125,9 @@
 	<bean id="departmentServiceImpl" class="service.impl.DepartmentServiceImpl">
 		<property name="departmentDAO" ref="departmentDAOImpl"></property>
 	</bean>
+	<bean id="salaryServiceImpl" class="service.impl.SalaryServiceImpl">
+		<property name="salaryDAOImpl" ref="salaryDAOImpl"></property>
+	</bean>
 	<!-- *********************************action的实体类bean**************************************** -->
 	<bean id="userAction" class="action.UserAction">
 		<property name="userService" ref="userServiceImpl" />
@@ -140,5 +143,8 @@
 	</bean>
 	<bean id="departmentAction" class="action.DepartmentAction">
 		<property name="departmentService" ref="departmentServiceImpl" />
+	</bean>
+	<bean id="salaryAction" class="action.SalaryAction">
+		<property name="salaryService" ref="salaryServiceImpl" />
 	</bean>
 </beans>

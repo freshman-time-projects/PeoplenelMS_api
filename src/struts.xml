@@ -35,7 +35,7 @@
 		<action name="recruit_*" class="recruitAction" method="{1}">
 			<result name="success">/index.jsp</result>
 		</action>
-		<action name="salary" class="action.SalaryAction" method="{1}">
+		<action name="salary_*" class="salaryAction" method="{1}">
 		   <result name="salary">/index.jsp</result>
 		</action>
 	</package>
