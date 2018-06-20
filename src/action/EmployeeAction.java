@@ -30,59 +30,71 @@ public class EmployeeAction extends ActionSupport {
 	public void setEmployeeService(EmployeeService employeeService) {
 		this.employeeService = employeeService;
 	}
-    //添加成功。》》》》》》前提必须得到部门的d_id的值
+
+	// 添加成功。》》》》》》前提必须得到部门的d_id的值
 	public String add() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-//		String msg = JsonUtil.getStrResponse();// 获取前端信
-		String msg = "{'e_id':'2','name':'xiao','age':'33','sex':'男','marry':'未','idCard':'3333','edu':'333','school':'虞城高中','mobile':'333','address':'333','email':'222','department':'3'}";
+		String msg = JsonUtil.getStrResponse();// 获取前端信
+		// String msg =
+		// "{'e_id':'2','name':'zhao','age':'3','sex':'男','marry':'未婚','idCard':'3333','edu':'333','school':'虞城高中','mobile':'333','address':'333','email':'222','department':'小明'}";
 		if (msg.length() != 0) {
 			JSONObject object = JSONObject.fromObject(msg);// 封装成Json对象
-			Employee employee = (Employee) object.toBean(object, Employee.class);// 转成bean对象
+			Employee employee = (Employee) object
+					.toBean(object, Employee.class);// 转成bean对象
 			System.out.println();
-			if (employeeService.saveEmployee(employee,object.get("department").toString()))
-				OutContent.successCotent(map,"保存成功!");
-			 else 
-				OutContent.failCotent(map,"保存失败!");
+			if (employeeService.saveEmployee(employee, object.get("department")
+					.toString()))
+				OutContent.successCotent(map, "保存成功!");
+			else
+				OutContent.failCotent(map, "保存失败!");
 		}
 		return null;
 	}
-///成功》》》》只要求一定有d_id的值，其他随意
+
+	// /成功》》》》只要求一定有d_id的值，其他随意
 	public String romove() throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();	
+		Map<String, Object> map = new HashMap<String, Object>();
 		String msg = JsonUtil.getStrResponse();// 获取前端信息
-//		String msg = "{'e_id':'3'}";
+		// String msg = "{'e_id':'3'}";
 		if (msg.length() != 0) {
 			JSONObject object = JSONObject.fromObject(msg);// 封装成Json对象
-			Employee employee = (Employee) object.toBean(object, Employee.class);// 转成bean对象
+			Employee employee = (Employee) object
+					.toBean(object, Employee.class);// 转成bean对象
 			if (employeeService.deleteEmployee(employee))
-				OutContent.successCotent(map,"刪除成功!");
-			 else 
-				OutContent.failCotent(map,"刪除失败!");
+				OutContent.successCotent(map, "刪除成功!");
+			else
+				OutContent.failCotent(map, "刪除失败!");
 		}
 		return null;
 	}
-	//更新成功》》》》
+
+	// 更新成功》》》》
 	public String update() throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();	
-		/*String msg = JsonUtil.getStrResponse();// 获取前端信息
-*/		String msg = "{'e_id':'25','name':'zzuao','age':'33','sex':'男','marry':'we婚','idCard':'3333','edu':'333','school':'虞城高中','mobile':'333','address':'333','email':'222'}";
+		Map<String, Object> map = new HashMap<String, Object>();
+		String msg = JsonUtil.getStrResponse();// 获取前端信息
+		// String msg =
+		// "{'e_id':'25','name':'zzuao','age':'33','sex':'男','marry':'we婚','idCard':'3333','edu':'333','school':'虞城高中','mobile':'333','address':'333','email':'222'}";
 		if (msg.length() != 0) {
 			JSONObject object = JSONObject.fromObject(msg);// 封装成Json对象
-			Employee employee = (Employee) object.toBean(object, Employee.class);// 转成bean对象
-			System.out.println(employee.toString()+"5566888888899999999999999");
+			Employee employee = (Employee) object
+					.toBean(object, Employee.class);// 转成bean对象
+			System.out.println(employee.toString()
+					+ "5566888888899999999999999");
 			if (employeeService.updateEmployee(employee))
-				OutContent.successCotent(map,"更新成功!");
-			 else 
-				OutContent.failCotent(map,"更新失败!");
+				OutContent.successCotent(map, "更新成功!");
+			else
+				OutContent.failCotent(map, "更新失败!");
 		}
 		return null;
 	}
-//成功》》》》》》》》》》》》
+
+	// 成功》》》》》》》》》》》》
 	public String getAll() {
 		List<Employee> list = employeeService.getAllEmployee();
 		try {
 			PrintWriter out = JsonUtil.getHeader();
-			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+			Gson gson = new GsonBuilder()
+					.excludeFieldsWithoutExposeAnnotation().create();
 			res.put("code", 0);
 			res.put("content", list);
 			String data = gson.toJson(res);
@@ -92,38 +104,45 @@ public class EmployeeAction extends ActionSupport {
 		}
 		return null;
 	}
-    //》》》》》》》》》》成功
+
+	// 》》》》》》》》》》成功
 	public String getOne() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<EmployeeAndDepartment>list = new ArrayList<>();
-		/*String msg = JsonUtil.getStrResponse();// 获取前端信息
-*/		String msg = "{'e_id':25}";
-		if (msg.length()!= 0) {
-			JSONObject object = JSONObject.fromObject(msg);//封装成Json对象
-			Employee employee1 = (Employee) object.toBean(object, Employee.class);// 转成bean对象
-			EmployeeAndDepartment employeeAndDepartment = employeeService.getEmployee(employee1);
+		List<EmployeeAndDepartment> list = new ArrayList<>();
+		String msg = JsonUtil.getStrResponse();// 获取前端信息
+		// String msg = "{'e_id':25}";
+		if (msg.length() != 0) {
+			JSONObject object = JSONObject.fromObject(msg);// 封装成Json对象
+			Employee employee1 = (Employee) object.toBean(object,
+					Employee.class);// 转成bean对象
+			EmployeeAndDepartment employeeAndDepartment = employeeService
+					.getEmployee(employee1);
 			System.out.println(employeeAndDepartment);
-			if (employeeAndDepartment!=null){
+			if (employeeAndDepartment != null) {
 				list.add(employeeAndDepartment);
 				OutContent.content(list);
-			}else 
+			} else
 				OutContent.content(list);
 		}
 		return null;
 	}
-/*/
+
+	// 》》》》》测试
 	public String search() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String msg = JsonUtil.getStrResponse();// 获取前端信息
+		/* String msg = JsonUtil.getStrResponse();// 获取前端信息 */
+		String msg = "{'name':'xia','description':'3'}";
 		if (msg.length() != 0) {
 			JSONObject object = JSONObject.fromObject(msg);// 封装成Json对象
-			String [] datas = new String[]{(String) object.get("name"),(String) object.get("description")};
-			List<EmployeeAndDepartment>list = employeeService.getPartEmployee(datas);
-			if (list!=null){
+			String[] datas = new String[] { (String) object.get("name"),
+					(String) object.get("description") };
+			List<EmployeeAndDepartment> list = employeeService
+					.getPartEmployee(datas);
+			if (list != null) {
 				OutContent.content(list);
-			}else 
+			} else
 				OutContent.content(list);
 		}
 		return null;
-	}*/
+	}
 }

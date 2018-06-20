@@ -116,7 +116,8 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 		Transaction transaction = session.beginTransaction();
 		Query query= session.createSQLQuery(GetSQLYuJu.EMPLOYEE_GET_PART);
 		query.setString(0,"%"+datas[0]+"%");
-		query.setString(1,datas[1]);
+		query.setString(1,"%"+datas[1]+"%");
+		query.setString(2,"%"+datas[0]+"%");
 		transaction.commit();
 		List<Object[]> list = query.list();
 		session.close();

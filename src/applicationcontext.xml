@@ -105,6 +105,10 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	<bean id="SalaryDAOImpl" class="dao.impl.SalaryDAOImpl">
+	<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	<property name="sessionFactory" ref="sessionFactory"></property>
+ 	</bean>
 	<!-- *************************************services的实体类bean******************************** -->
 	<bean id="userServiceImpl" class="service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDaoImpl"></property>

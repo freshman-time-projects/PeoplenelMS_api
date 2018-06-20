@@ -32,32 +32,13 @@ public class SalaryDAOImpl implements SalaryDAO{
 		
 	}
 
-	public Integer deleteSalary(Salary salary) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean bonus(Salary salary) {
+		 
+		
+		
+		return false;
 	}
 
-	@Override
-	public Integer UpdateSalary(Salary salary) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Salary> getAllSalary() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Salary> getPartSalary() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-		Session session = sessionFactory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		/*return null;*/
 	public Salary getSalary() {
 		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = session.beginTransaction();

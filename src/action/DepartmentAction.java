@@ -41,20 +41,18 @@ public class DepartmentAction extends ActionSupport {
 		try {
 			// 处理跨域
 			String jsoon = JsonUtil.getStrResponse();
-			/*
-			 * String jsoon =
-			 * "{'name':'12','description':'45',}";//**************
-			 */JSONObject jsonObject = JSONObject.fromObject(jsoon);
-			Department department = (Department) JSONObject.toBean(jsonObject,
+			 JSONObject jsonObject = JSONObject.fromObject(jsoon);
+			 Department department = (Department)JSONObject.toBean(jsonObject,
 					Department.class);
+			 System.out.println(department.toString()+"*************************************");
 			if (departmentService.saveDepartment(department)) {
 				OutContent.successCotent(map,"保存成功!");
 			} else {
 				OutContent.failCotent(map,"保存失败!");
 			}
-			String data = gson.toJson(map);
-			/* JSONObject json = JSONObject.fromObject(map); */
-			out.print(data);
+			/*String data = gson.toJson(map);
+			 JSONObject json = JSONObject.fromObject(map); 
+			out.print(data);*/
 		} catch (Exception e) {
 			OutContent.failCotent(map,"保存失败!");
 		}
@@ -74,9 +72,6 @@ public class DepartmentAction extends ActionSupport {
 			map.put("code", 3);
 			map.put("msg", "删除失败");
 		}
-		
-		JSONObject object = JSONObject.fromObject(map);
-		out.print(object);
 		return null;
 	}
 
