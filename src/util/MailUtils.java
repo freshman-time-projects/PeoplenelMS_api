@@ -23,7 +23,7 @@ public class MailUtils {
 	public static void sendMail(String to,String code) throws UnknownHostException{
 		String fromEmail="572220216@qq.com";//你的QQ邮箱
 
-        String eMailType="ssl://smtp.qq.com";
+        String eMailType="smtp.qq.com";
 
         String eMailAuthPassword="eeorlwjaijrxbcdb";
 		//1.创建连接对象，连接到服务器
