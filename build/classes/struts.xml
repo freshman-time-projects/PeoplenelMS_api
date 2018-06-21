@@ -6,7 +6,7 @@
 	<package name="default" extends ="struts-default" namespace="/">
 	   <interceptors>
 	   <interceptor name="LoginCheck" class="interfilter.Logincheck">
-	   <param name="excludeMethods">login</param>
+	   <param name="excludeMethods">login,add,addRecruit,active</param>
 	   </interceptor>
 	   <interceptor-stack name="difinitedStack">
 	   <interceptor-ref name="LoginCheck"></interceptor-ref>
@@ -14,7 +14,7 @@
 	   </interceptor-stack>
 	   </interceptors>
 	   <!-- 全局拦截器 -->
-	   <!--  <default-interceptor-ref name="difinitedStack"></default-interceptor-ref>  -->
+	   <default-interceptor-ref name="difinitedStack"></default-interceptor-ref> 
 	   <!-- 失败之后去向 -->
 	   <global-results>
 	   <result name="input">/index.jsp</result>
@@ -34,6 +34,9 @@
 		</action>
 		<action name="recruit_*" class="recruitAction" method="{1}">
 			<result name="success">/index.jsp</result>
+		</action>
+		<action name="salary_*" class="salaryAction" method="{1}">
+		   <result name="salary">/index.jsp</result>
 		</action>
 	</package>
 	</struts>

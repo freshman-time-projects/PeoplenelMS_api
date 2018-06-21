@@ -40,6 +40,9 @@ public class DepartmentAction extends ActionSupport {
 			} else {
 				OutContent.failCotent(res, "保存失败!");
 			}
+			/*String data = gson.toJson(map);
+			 JSONObject json = JSONObject.fromObject(map); 
+			out.print(data);*/
 			/* JSONObject json = JSONObject.fromObject(map); */
 		} catch (Exception e) {
 			OutContent.failCotent(res, "保存失败!");

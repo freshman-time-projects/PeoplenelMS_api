@@ -74,31 +74,38 @@ public class EmployeeAction extends ActionSupport {
 
 	// 添加成功。》》》》》》前提必须得到部门的d_id的值
 	public String add() throws Exception {
-		String msg = JsonUtil.getStrResponse();// 获取前端信
-		if (msg.length() != 0) {
-			JSONObject object = JSONObject.fromObject(msg);// 封装成Json对象
-			Employee employee = (Employee) JSONObject.toBean(object, Employee.class);// 转成bean对象
-			Salary salary = new Salary();
-			salary.setName(employee.getName());
-			salary.setSalary("20000");
-			if (employeeService.saveEmployee(employee, object.get("department").toString())
-					&& salaryService.saveSalary(salary, object.get("email").toString()))
-				OutContent.successCotent(res, "保存成功!");
-			else
-				OutContent.failCotent(res, "保存失败!");
+		try {
+			String msg = JsonUtil.getStrResponse();// 获取前端信
+			if (msg.length() != 0) {
+				JSONObject object = JSONObject.fromObject(msg);// 封装成Json对象
+				Employee employee = (Employee) JSONObject.toBean(object, Employee.class);// 转成bean对象
+				Salary salary = new Salary();
+				salary.setName(employee.getName());
+				salary.setSalary("20000");
+				salary.setBonus(0.0);
+				if (object.getString("email").equals(""))
+					OutContent.failCotent(res, "权限不足，请通过正常流程添加员工");
+				if (employeeService.saveEmployee(employee, object.get("department").toString())
+						&& salaryService.saveSalary(salary, object.get("email").toString()))
+					OutContent.successCotent(res, "保存成功!");
+				else
+					OutContent.failCotent(res, "保存失败!");
+			}
+		} catch (Exception e) {
+			OutContent.failCotent(res, "权限不足，请通过正常流程添加员工");
 		}
+
 		return null;
 	}
 
-	/// 成功》》》》只要求一定有d_id的值，其他随意
+	// /成功》》》》只要求一定有d_id的值，其他随意
 	public String romove() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String msg = JsonUtil.getStrResponse();// 获取前端信息
-		System.out.println("ssssa123" + msg);
 		// String msg = "{'e_id':'3'}";
 		if (msg.length() != 0) {
 			JSONObject object = JSONObject.fromObject(msg);// 封装成Json对象
-			Employee employee = (Employee) JSONObject.toBean(object, Employee.class);// 转成bean对象
+			Employee employee = (Employee) object.toBean(object, Employee.class);// 转成bean对象
 			if (employeeService.deleteEmployee(employee))
 				OutContent.successCotent(map, "刪除成功!");
 			else
@@ -111,15 +118,12 @@ public class EmployeeAction extends ActionSupport {
 	public String update() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String msg = JsonUtil.getStrResponse();// 获取前端信息
-		System.out.println("msg" + msg);
 		// String msg =
 		// "{'e_id':'25','name':'zzuao','age':'33','sex':'男','marry':'we婚','idCard':'3333','edu':'333','school':'虞城高中','mobile':'333','address':'333','email':'222'}";
 		if (msg.length() != 0) {
 			JSONObject object = JSONObject.fromObject(msg);// 封装成Json对象
 			System.out.println("object" + object);
 			Employee employee = (Employee) JSONObject.toBean(object, Employee.class);// 转成bean对象
-			System.out.println("******" + employee);
-
 			if (employeeService.updateEmployee(employee))
 				OutContent.successCotent(map, "更新成功!");
 			else
@@ -165,20 +169,16 @@ public class EmployeeAction extends ActionSupport {
 		return null;
 	}
 
+	// 》》》》》测试
 	public String search() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String msg = JsonUtil.getStrResponse();// 获取前端信息
-		System.out.println("msg" + msg);
+		// String msg = "{'name':'xia','description':'3'}";
 		if (msg.length() != 0) {
-			JSONObject object = JSONObject.fromObject(msg);
-
-			System.out.println("msg11");
-			String[] datas = new String[] { (String) object.get("name"), (String) object.get("department") };
-
-			System.out.println("2");
+			JSONObject object = JSONObject.fromObject(msg);// 封装成Json对象
+			String[] datas = new String[] { (String) object.get("name"), (String) object.get("department") }; //！！！有问题 应该是department
+			System.out.println("datasss"+datas[0]+"  "+datas[1]);
 			List<EmployeeAndDepartment> list = employeeService.getPartEmployee(datas);
-
-			System.out.println("3");
 			if (list != null) {
 				OutContent.content(list);
 			} else
@@ -198,7 +198,7 @@ public class EmployeeAction extends ActionSupport {
 		res.put("recruitCount", recruitCount);
 		res.put("faceCount", faceCount);
 		JSONObject message = JSONObject.fromObject(res);
-			out.print(message);
+		out.print(message);
 		return null;
 	}
 

@@ -131,16 +131,22 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	// 模糊查询语句,通过id或者name查询
 	public List<EmployeeAndDepartment> getPartEmployee(String[] datas) {
-		System.out.println("a1");
+		System.out.println("datas:"+datas[0]+" "+datas[1]);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		Query query = session.createSQLQuery(GetSQLYuJu.EMPLOYEE_GET_PART);
-		System.out.println("a2" + datas[0]+"  "+datas[1]);
-//		query.setString(0, "%" + datas[0] + "%");
-//		query.setString(1, "%" + datas[1] + "%");
-		System.out.println("a3");
+//<<<<<<< HEAD
+//		Query query = session.createSQLQuery(GetSQLYuJu.EMPLOYEE_GET_PART);
+//		System.out.println("a2" + datas[0]+"  "+datas[1]);
+////		query.setString(0, "%" + datas[0] + "%");
+////		query.setString(1, "%" + datas[1] + "%");
+//		System.out.println("a3");
+//=======
+		Query query= session.createSQLQuery(GetSQLYuJu.EMPLOYEE_GET_PART);
+		query.setString(0,"%"+datas[0]+"%");
+		query.setString(1,"%"+datas[1]+"%");
 		transaction.commit();
 		List<Object[]> list = query.list();
+		System.out.println("&*&*&*"+list.size());
 		session.close();
 		if (list == null || list.size() == 0) {
 			System.out.println("**---");

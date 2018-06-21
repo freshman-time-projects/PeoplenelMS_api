@@ -38,7 +38,7 @@
 		<!-- 配置hibernate信息 -->
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -139,36 +139,42 @@
 		class="service.impl.DepartmentServiceImpl">
 		<property name="departmentDAO" ref="departmentDAOImpl"></property>
 	</bean>
+<!-- 	<<<<<<< HEAD
 	<bean id="salaryServiceImpl"
 		class="service.impl.SalaryServiceImpl">
 		<property name="salaryDAO" ref="salaryDAOImpl"></property>
-	</bean>
-	<!-- *********************************action的实体类bean**************************************** -->
-	<bean id="userAction" class="action.UserAction">
-		<property name="userService" ref="userServiceImpl" />
-		<property name="employeeService" ref="employeeServiceImpl" />
-	</bean>
-	<bean id="employeeAction" class="action.EmployeeAction">
-		<property name="employeeService" ref="employeeServiceImpl" />
-		<property name="salaryService" ref="salaryServiceImpl" />
-		<property name="departmentService" ref="departmentServiceImpl" />
-		<property name="recruitService" ref="recruitServiceImpl" />
-		
-	</bean>
-	<bean id="employeeAndDepartmentAction"
-		class="action.EmployeeAndDepartmentAction">
-		<property name="employeeAndDepartmentService"
-			ref="employeeAndDepartmentServiceImpl" />
-	</bean>
-	<bean id="recruitAction" class="action.RecruitAction">
-		<property name="recruitService" ref="recruitServiceImpl" />
-		<property name="userService" ref="userServiceImpl" />
-	</bean>
-	<bean id="departmentAction" class="action.DepartmentAction">
-		<property name="departmentService"
-			ref="departmentServiceImpl" />
-	</bean>
-	<bean id="salaryAction" class="action.SalaryAction">
-		<property name="salaryService" ref="salaryServiceImpl" />
-	</bean>
+		======= -->
+		<bean id="salaryServiceImpl"
+			class="service.impl.SalaryServiceImpl">
+			<property name="salaryDAOImpl" ref="salaryDAOImpl"></property>
+		</bean>
+		<!-- *********************************action的实体类bean**************************************** -->
+		<bean id="userAction" class="action.UserAction">
+			<property name="userService" ref="userServiceImpl" />
+			<property name="employeeService" ref="employeeServiceImpl" />
+		</bean>
+		<bean id="employeeAction" class="action.EmployeeAction">
+			<property name="employeeService" ref="employeeServiceImpl" />
+			<property name="salaryService" ref="salaryServiceImpl" />
+			<property name="departmentService"
+				ref="departmentServiceImpl" />
+			<property name="recruitService" ref="recruitServiceImpl" />
+
+		</bean>
+		<bean id="employeeAndDepartmentAction"
+			class="action.EmployeeAndDepartmentAction">
+			<property name="employeeAndDepartmentService"
+				ref="employeeAndDepartmentServiceImpl" />
+		</bean>
+		<bean id="recruitAction" class="action.RecruitAction">
+			<property name="recruitService" ref="recruitServiceImpl" />
+			<property name="userService" ref="userServiceImpl" />
+		</bean>
+		<bean id="departmentAction" class="action.DepartmentAction">
+			<property name="departmentService"
+				ref="departmentServiceImpl" />
+		</bean>
+		<bean id="salaryAction" class="action.SalaryAction">
+			<property name="salaryService" ref="salaryServiceImpl" />
+		</bean>
 </beans>

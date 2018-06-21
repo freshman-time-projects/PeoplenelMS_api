@@ -72,7 +72,7 @@ public class RecruitServiceImpl implements RecruitService {
 		try {
 			System.out.println("userEmial" + user.getEmail() + " " + user.getCode());
 			MailUtils.sendMail(user.getEmail(), user.getCode());
-//			user.setState("1");
+//			user.setState("1"); //邮箱不能用时代替
 			Recruit recruit = recruitDAO.access(user);
 			String ids[] = { recruit.getR_id().toString() };
 			return userDAO.UpdateUser(user) && recruitDAO.UpdateRecruit(ids, "2");

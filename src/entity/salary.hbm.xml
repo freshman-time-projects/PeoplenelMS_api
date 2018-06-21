@@ -10,6 +10,6 @@
     <property name="name" column="name" type="java.lang.String"></property>
     <property name="salary" column="salary" type="java.lang.String"></property>
     <property name="bonus" column="bonus" type="java.lang.Double"></property>
-    <many-to-one name="employee" class="entity.Employee" column="e_id" unique="true" not-null="false"> </many-to-one>
+    <many-to-one name="employee" class="entity.Employee" column="e_id" cascade="all" unique="true" not-null="false"> </many-to-one>
     </class>
     </hibernate-mapping>

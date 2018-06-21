@@ -36,6 +36,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 
 	@Override
 	public boolean saveDepartment(Department department) {
+		System.out.println("///////////////////////////////////////////////////////");
 		if(hibernateTemplate.save(department)!=null)
 			return true;
 		return false;

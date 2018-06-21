@@ -59,7 +59,7 @@ public class MailUtils {
 	                    + code + "target='_blank'>"+"http://localhost/Blog/user?method=register&acode="+code+"</a></font>", "text/html;charset=utf-8");*/
 	            /*// StringBuilder是线程不安全的
 			  String localhost =  InetAddress.getLocalHost().getHostAddress();*/
-			  String localhost = "127.0.0.1:8888";
+			  String localhost = "192.168.43.119:8888";
 	            StringBuilder sbd = new StringBuilder();
 	            sbd.append("<br/><h1>欢迎！请确认此邮件地址以激活您的账号。</h1><br/>");
 	            sbd.append("<font color='red'><a href='http://"+localhost+"/PersonnelMS/user_active?code="

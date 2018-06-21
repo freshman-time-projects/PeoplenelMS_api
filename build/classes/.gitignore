@@ -1,0 +1,21 @@
+<<<<<<< HEAD
+/action
+/api
+/applicationcontext.xml
+/customdefinited
+/dao
+/entity
+/interfilter
+/service
+/sql
+/struts.xml
+/test
+/util
+=======
+/entity/
+/customdefinited/
+/dao/
+/sql/
+/action/
+/util/
+>>>>>>> b1504a1bcc71805a0eb62a0bdcd2f4a4ca09c558
